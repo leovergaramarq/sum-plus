@@ -42,8 +42,6 @@ void main() {
     // Tap the submit button
     await tester.tap(find.byKey(const Key('ButtonSignUpSubmit')));
     await tester.pumpAndSettle();
-
-    // For example, you can verify that the navigation to another page occurred:
-    // expect(find.byKey(const Key('HomePage')), findsOneWidget);
+    expect(find.byKey(const Key('HomePage')), findsNothing);
   });
 }

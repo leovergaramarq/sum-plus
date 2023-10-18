@@ -164,16 +164,6 @@ class _QuestPageState extends State<QuestPage> with WidgetsBindingObserver {
 
       Answer? newAnswer =
           _questionController.answer(_questionController.answerSeconds);
-
-      if (newAnswer != null) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(newAnswer.isCorrect ? 'Correct!' : 'Incorrect'),
-        ));
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Error when answering the question'),
-        ));
-      }
     }
   }
 
