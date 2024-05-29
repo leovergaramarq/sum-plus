@@ -180,11 +180,6 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                           key: const Key('TextFormFieldLoginEmail'),
                           controller: _emailController,
                           decoration: const InputDecoration(labelText: 'Email'),
-                          // onChanged: (value) {
-                          //   _emailController.text = value.trim();
-                          //   _emailController.selection = TextSelection.fromPosition(
-                          //       TextPosition(offset: _emailController.text.length));
-                          // },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Enter email";
@@ -217,33 +212,47 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                           },
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 32,
                         ),
                         OutlinedButton(
                             key: const Key('ButtonLoginSubmit'),
                             onPressed: onSubmit,
-                            child: const Text("Submit")),
+                            child: const Text(
+                              "Submit",
+                              style: TextStyle(
+                                fontSize: 24,
+                              ),
+                            )),
                         const SizedBox(
                           height: 20,
                         ),
-                        TextButton(
-                            key: const Key('ButtonLoginCreateAccount'),
-                            onPressed: () => Get.offAll(
-                                  () => const SignUpPage(
-                                    key: Key('SignUpPage'),
+                        SizedBox(
+                          height: 36,
+                          child: TextButton(
+                              key: const Key('ButtonLoginCreateAccount'),
+                              onPressed: () => Get.offAll(
+                                    () => const SignUpPage(
+                                      key: Key('SignUpPage'),
+                                    ),
                                   ),
+                              child: const Text(
+                                'Create account',
+                                style: TextStyle(
+                                  fontSize: 16,
                                 ),
-                            child: const Text('Create account')),
-                        // const SizedBox(
-                        //   height: 8,
-                        // ),
-                        TextButton(
-                            key: const Key('ButtonLoginContinueAsGuest'),
-                            onPressed: onContinueAsGuest,
-                            child: const Text(
-                              'Continue as guest',
-                              style: TextStyle(color: Colors.black54),
-                            ))
+                              )),
+                        ),
+                        SizedBox(
+                          height: 36,
+                          child: TextButton(
+                              key: const Key('ButtonLoginContinueAsGuest'),
+                              onPressed: onContinueAsGuest,
+                              child: const Text(
+                                'Continue as guest',
+                                style: TextStyle(
+                                    color: Colors.black54, fontSize: 16),
+                              )),
+                        )
                       ],
                     ),
                   ),

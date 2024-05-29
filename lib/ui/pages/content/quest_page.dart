@@ -83,11 +83,10 @@ class _QuestPageState extends State<QuestPage> with WidgetsBindingObserver {
     } else {
       // There aren't more questions
       _questionController.wrapSessionUp();
-      if (_authController.isLoggedIn) {
-        _sessionController
-            .addSession(_questionController.session)
-            .catchError((e) => print(e));
-      }
+
+      _sessionController
+          .addSession(_questionController.session)
+          .catchError((e) => print(e));
       Get.off(() => const SessionSummaryPage(
             key: Key('SessionSummaryPage'),
           ));

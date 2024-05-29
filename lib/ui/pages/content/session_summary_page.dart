@@ -53,7 +53,7 @@ class _SessionSummaryPageState extends State<SessionSummaryPage>
                         LevelStarsWidget(
                           level: min(_questionController.level,
                               _questionController.maxLevel),
-                          starSize: 72,
+                          starSize: 56,
                         ),
                         const Text('New level!',
                             style: TextStyle(

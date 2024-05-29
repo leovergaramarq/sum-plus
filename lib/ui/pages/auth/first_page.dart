@@ -80,17 +80,18 @@ class _FirstPageState extends State<FirstPage> {
                   key: const Key('LoginButton'),
                   onPressed: onStart,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF997AC1),
+                    backgroundColor: Theme.of(context).primaryColor,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+                      borderRadius: BorderRadius.circular(32.0),
                     ),
-                    minimumSize: Size(200, 40),
+                    minimumSize: Size(200, 48),
                   ),
                   child: const Text(
                     'Let\'s start!',
                     style: TextStyle(
+                      color: Colors.white,
                       fontFamily: 'Inter',
-                      fontSize: 15,
+                      fontSize: 20,
                     ),
                   ),
                 ),

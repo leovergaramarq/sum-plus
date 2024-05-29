@@ -53,6 +53,8 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(text),
+      foregroundColor: Theme.of(context).primaryColorLight,
+      backgroundColor: Theme.of(context).primaryColor,
       centerTitle: true,
       actions: [
         if (logoutButton)
