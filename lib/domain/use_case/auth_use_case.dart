@@ -1,12 +1,9 @@
-// import 'package:get/get.dart';
+import 'package:get/get.dart';
 
-// import 'package:sum_plus/domain/repositories/auth_repository.dart';
-import 'package:sum_plus/data/repositories/auth_authserver_repository.dart';
+import 'package:sum_plus/domain/repositories/auth_repository.dart';
 
 class AuthUseCase {
-  // final AuthAuthserverRepository _authRepository =
-  //     Get.find<AuthAuthserverRepository>();
-  final AuthAuthserverRepository _authRepository = AuthAuthserverRepository();
+  final AuthRepository _authRepository = Get.find<AuthRepository>();
 
   Future<String> login(String email, String password) async =>
       await _authRepository.login(email, password);

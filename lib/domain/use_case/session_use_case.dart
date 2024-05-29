@@ -1,13 +1,10 @@
-// import 'package:get/get.dart';
+import 'package:get/get.dart';
 
-// import 'package:sum_plus/domain/repositories/session_repository.dart';
-import 'package:sum_plus/data/repositories/session_retool_repository.dart';
+import 'package:sum_plus/domain/repositories/session_repository.dart';
 import 'package:sum_plus/domain/models/session.dart';
 
 class SessionUseCase {
-  // final SessionRetoolRepository _sessionRepository =
-  //     Get.find<SessionRetoolRepository>();
-  final SessionRetoolRepository _sessionRepository = SessionRetoolRepository();
+  final SessionRepository _sessionRepository = Get.find<SessionRepository>();
 
   // static fields
   final int numSummarizeSessions = 5;

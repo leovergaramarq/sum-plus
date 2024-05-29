@@ -1,12 +1,10 @@
-// import 'package:get/get.dart';
+import 'package:get/get.dart';
 
-// import 'package:sum_plus/domain/repositories/user_repository.dart';
-import 'package:sum_plus/data/repositories/user_retool_repository.dart';
+import 'package:sum_plus/domain/repositories/user_repository.dart';
 import 'package:sum_plus/domain/models/user.dart';
 
 class UserUseCase {
-  // final UserRetoolRepository _userRepository = Get.find<UserRetoolRepository>();
-  final UserRetoolRepository _userRepository = UserRetoolRepository();
+  final UserRepository _userRepository = Get.find<UserRepository>();
 
   Future<User> getUser(String? email) async {
     return await _userRepository.getUser(email);
