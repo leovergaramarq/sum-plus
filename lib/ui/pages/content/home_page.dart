@@ -2,6 +2,7 @@ import 'package:loggy/loggy.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sum_plus/domain/models/session.dart';
 import 'dart:math';
 
 import 'package:sum_plus/ui/pages/content/quest_page.dart';
@@ -17,8 +18,8 @@ import 'package:sum_plus/ui/controller/session_controller.dart';
 import 'package:sum_plus/domain/models/answer.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key, this.fetchSessions = true}) : super(key: key);
-  bool fetchSessions;
+  const HomePage({Key? key, this.fetchSessions = true}) : super(key: key);
+  final bool fetchSessions;
 
   @override
   HomePageState createState() => HomePageState();
@@ -39,6 +40,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
               limit: _sessionController.numSummarizeSessions)
           .catchError((err) {
         logError(err);
+        return [] as List<Session>;
       });
     }
     super.initState();

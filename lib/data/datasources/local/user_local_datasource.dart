@@ -1,15 +1,19 @@
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+import 'package:sum_plus/data/datasources/local/hive_value_manager.dart';
 
 import 'package:sum_plus/domain/models/user.dart';
 
 class UserLocalDatasource {
   UserLocalDatasource() {
-    SharedPreferences.getInstance().then((value) => prefs = value);
+    _hiveUserManager = HiveValueManager(_userKey, _domain);
   }
 
-  final String userKey = 'user';
-  SharedPreferences? prefs;
+  final String _domain = 'flutter.domain.user';
+  final String _userKey = 'user';
+  bool _boxOpened = false;
+  late HiveValueManager _hiveUserManager;
 
   Future<User?> getUser() async => await _getUser();
 
@@ -25,7 +29,7 @@ class UserLocalDatasource {
       String? degree,
       String? school,
       int? level}) async {
-    prefs ??= await SharedPreferences.getInstance();
+    if (!_boxOpened) await _openBox();
 
     final User? user = await _getUser();
     if (user == null) {
@@ -44,17 +48,19 @@ class UserLocalDatasource {
   }
 
   Future<User?> _getUser() async {
-    prefs ??= await SharedPreferences.getInstance();
-    final String? userString = prefs!.getString(userKey);
+    if (!_boxOpened) await _openBox();
+
+    final String? userString = _hiveUserManager.getValue();
     if (userString == null) return null;
     final Map<String, dynamic> userMap = jsonDecode(userString);
     return User.fromJson(userMap);
   }
 
   Future<User> _setUser(User user) async {
-    prefs ??= await SharedPreferences.getInstance();
+    if (!_boxOpened) await _openBox();
+
     final String userString = jsonEncode(user.toJson());
-    final bool result = await prefs!.setString(userKey, userString);
+    final bool result = await _hiveUserManager.putValue(userString);
     if (!result) {
       return Future.error('User couldn\'t be saved');
     }
@@ -62,12 +68,19 @@ class UserLocalDatasource {
   }
 
   Future<bool> removeUser() async {
-    prefs ??= await SharedPreferences.getInstance();
-    return await prefs!.remove(userKey);
+    if (!_boxOpened) await _openBox();
+
+    return await _hiveUserManager.removeValue();
   }
 
   Future<bool> containsUser() async {
-    prefs ??= await SharedPreferences.getInstance();
-    return prefs!.containsKey(userKey);
+    if (!_boxOpened) await _openBox();
+
+    return _hiveUserManager.getValue() != null;
+  }
+
+  Future<void> _openBox() async {
+    await Hive.openBox(_domain);
+    _boxOpened = true;
   }
 }

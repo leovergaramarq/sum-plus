@@ -1,12 +1,19 @@
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:sum_plus/data/datasources/local/hive_value_manager.dart';
 
 import 'package:sum_plus/domain/models/session.dart';
 
 class SessionLocalDatasource {
+  SessionLocalDatasource() {
+    _hiveSessionManager = HiveValueManager(_sessionsKey, _domain);
+  }
+
   final int maxSessions = 100;
-  final String sessionsKey = 'sessions';
-  SharedPreferences? prefs;
+  final String _domain = 'flutter.domain.session';
+  final String _sessionsKey = 'sessions';
+  bool _boxOpened = false;
+  late HiveValueManager _hiveSessionManager;
 
   Future<List<Session>> getSessions({int? limit}) async =>
       (await _getSessionsStoreFromUser()).map((e) => e.data).toList();
@@ -15,7 +22,7 @@ class SessionLocalDatasource {
       await _getSessionsStoreFromUser(limit: limit);
 
   Future<Session> addSession(bool isUpToDate, Session session) async {
-    prefs ??= await SharedPreferences.getInstance();
+    if (!_boxOpened) await _openBox();
     List<SessionStore> sessionsStore = await _getSessionsStoreFromUser();
     if (sessionsStore.length >= maxSessions) {
       sessionsStore = sessionsStore
@@ -31,13 +38,13 @@ class SessionLocalDatasource {
     final String sessionsString =
         jsonEncode(sessionsStore.map((e) => e.toJson()).toList());
 
-    await prefs!.setString(sessionsKey, sessionsString);
+    await _hiveSessionManager.putValue(sessionsString);
     return session;
   }
 
   Future<void> setSessionsStore(List<SessionStore> sessionsStore,
       {bool replaceNotUpToDate = false}) async {
-    prefs ??= await SharedPreferences.getInstance();
+    if (!_boxOpened) await _openBox();
     if (!replaceNotUpToDate) {
       List<SessionStore> missingSessions = (await _getSessionsStoreFromUser())
           .where((e) => !e.isUpToDate)
@@ -50,12 +57,12 @@ class SessionLocalDatasource {
     final String sessionsString =
         jsonEncode(sessionsStore.map((e) => e.toJson()).toList());
 
-    await prefs!.setString(sessionsKey, sessionsString);
+    await _hiveSessionManager.putValue(sessionsString);
   }
 
   Future<void> setSessions(bool isUpToDate, List<Session> sessions,
       {bool replaceNotUpToDate = false}) async {
-    prefs ??= await SharedPreferences.getInstance();
+    if (!_boxOpened) await _openBox();
 
     List<SessionStore> sessionsStore =
         sessions.map((e) => SessionStore(e, isUpToDate)).toList();
@@ -72,12 +79,12 @@ class SessionLocalDatasource {
     final String sessionsString =
         jsonEncode(sessionsStore.map((e) => e.toJson()).toList());
 
-    await prefs!.setString(sessionsKey, sessionsString);
+    await _hiveSessionManager.putValue(sessionsString);
   }
 
   Future<List<SessionStore>> _getSessionsStoreFromUser({int? limit}) async {
-    prefs ??= await SharedPreferences.getInstance();
-    final String? sessionsStoreString = prefs!.getString(sessionsKey);
+    if (!_boxOpened) await _openBox();
+    final String? sessionsStoreString = _hiveSessionManager.getValue();
     if (sessionsStoreString == null) return [];
 
     final List<dynamic> sessionsStoreMap = jsonDecode(sessionsStoreString);
@@ -91,13 +98,18 @@ class SessionLocalDatasource {
   }
 
   Future<bool> removeSessions() async {
-    prefs ??= await SharedPreferences.getInstance();
-    return await prefs!.remove(sessionsKey);
+    if (!_boxOpened) await _openBox();
+    return await _hiveSessionManager.removeValue();
   }
 
   Future<bool> containsSessions() async {
-    prefs ??= await SharedPreferences.getInstance();
-    return prefs!.containsKey(sessionsKey);
+    if (!_boxOpened) await _openBox();
+    return _hiveSessionManager.getValue() != null;
+  }
+
+  Future<void> _openBox() async {
+    await Hive.openBox(_domain);
+    _boxOpened = true;
   }
 }
 

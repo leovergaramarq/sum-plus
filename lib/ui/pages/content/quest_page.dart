@@ -87,6 +87,7 @@ class QuestPageState extends State<QuestPage> with WidgetsBindingObserver {
           .addSession(_questionController.session)
           .catchError((err) {
         logError(err);
+        return _questionController.session;
       });
       Get.off(() => const SessionSummaryPage(
             key: Key('SessionSummaryPage'),

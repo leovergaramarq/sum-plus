@@ -1,8 +1,10 @@
+import 'dart:convert';
+
 import 'package:loggy/loggy.dart';
 
 import 'package:sum_plus/data/datasources/remote/session_datasource.dart';
 import 'package:sum_plus/data/datasources/local/session_local_datasource.dart';
-import 'package:sum_plus/data/utils/network_util.dart';
+// import 'package:sum_plus/data/utils/network_util.dart';
 
 import 'package:sum_plus/domain/models/session.dart';
 import 'package:sum_plus/domain/repositories/session_repository.dart';
@@ -17,19 +19,23 @@ class SessionRetoolRepository implements SessionRepository {
   @override
   Future<List<Session>> getSessionsFromUser(String? userEmail,
       {int? limit, String? sort, String? order}) async {
-    bool lastNetworkCheck = NetworkUtil.lastNetworkCheck;
-
-    if (await NetworkUtil.hasNetwork() && userEmail != null) {
-      if (!lastNetworkCheck) await checkMissingLocalSessions();
-      List<Session> sessions = await _sessionDatasource.getSessionsFromUser(
-        baseUri,
-        userEmail,
-        limit: limit,
-        sort: sort,
-        order: order,
-      );
-      _sessionLocalDatasource.setSessions(true, sessions);
-      return sessions;
+    if (userEmail != null) {
+      try {
+        List<Session> sessions = await _sessionDatasource.getSessionsFromUser(
+          baseUri,
+          userEmail,
+          limit: limit,
+          sort: sort,
+          order: order,
+        );
+        _sessionLocalDatasource.setSessions(true, sessions).catchError((err) {
+          logError(err);
+        });
+        return sessions;
+      } catch (err) {
+        logError(err);
+        return _sessionLocalDatasource.getSessions();
+      }
     } else {
       return _sessionLocalDatasource.getSessions();
     }
@@ -37,17 +43,18 @@ class SessionRetoolRepository implements SessionRepository {
 
   @override
   Future<Session> addSession(Session session) async {
-    bool lastNetworkCheck = NetworkUtil.lastNetworkCheck;
-
-    if (await NetworkUtil.hasNetwork()) {
-      if (!lastNetworkCheck) await checkMissingLocalSessions();
+    try {
       final Session newSession =
           await _sessionDatasource.addSession(baseUri, session);
 
-      _sessionLocalDatasource.addSession(true, newSession);
+      _sessionLocalDatasource.addSession(true, newSession).catchError((err) {
+        logError(err);
+        return newSession;
+      });
 
       return newSession;
-    } else {
+    } catch (err) {
+      logError(err);
       return await _sessionLocalDatasource.addSession(false, session);
     }
   }

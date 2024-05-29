@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:sum_plus/ui/pages/auth/first_page.dart';
 
@@ -16,10 +17,43 @@ MaterialColor myPrimarySwatch = const MaterialColor(0xFF997AC1, {
   900: Color(0xFF5F4480),
 });
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+// const String spKey = 'myBool';
+
+class _MyAppState extends State<MyApp> {
+  // SharedPreferences? sharedPreferences;
+
+  // bool? _testValue;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   SharedPreferences.getInstance().then((SharedPreferences sp) {
+  //     sharedPreferences = sp;
+  //     _testValue = sharedPreferences!.getBool(spKey);
+  //     // will be null if never previously saved
+  //     if (_testValue == null) {
+  //       _testValue = false;
+  //       persist(_testValue!); // set an initial value
+  //     }
+  //     setState(() {});
+  //   });
+  // }
+
+  // void persist(bool value) {
+  //   setState(() {
+  //     _testValue = value;
+  //   });
+  //   sharedPreferences?.setBool(spKey, value);
+  // }
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

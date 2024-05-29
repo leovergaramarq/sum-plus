@@ -2,7 +2,7 @@ import 'package:loggy/loggy.dart';
 
 import 'package:sum_plus/data/datasources/remote/user_datasource.dart';
 import 'package:sum_plus/data/datasources/local/user_local_datasource.dart';
-import 'package:sum_plus/data/utils/network_util.dart';
+// import 'package:sum_plus/data/utils/network_util.dart';
 
 import 'package:sum_plus/domain/models/user.dart';
 import 'package:sum_plus/domain/repositories/user_repository.dart';
@@ -22,6 +22,7 @@ class UserRetoolRepository implements UserRepository {
       user = await _userDatasource.getUser(baseUri, email);
       _userLocalDatasource.setUser(user).catchError((err) {
         logError(err);
+        return user!;
       });
       return user;
     } else {
@@ -34,19 +35,22 @@ class UserRetoolRepository implements UserRepository {
     final User newUser = await _userDatasource.addUser(baseUri, user);
     _userLocalDatasource.setUser(newUser).catchError((err) {
       logError(err);
+      return newUser;
     });
     return newUser;
   }
 
   @override
   Future<User> updateUser(User user) async {
-    if (await NetworkUtil.hasNetwork()) {
+    try {
       final User updatedUser = await _userDatasource.updateUser(baseUri, user);
       _userLocalDatasource.updateUser(updatedUser).catchError((err) {
         logError(err);
+        return updatedUser;
       });
       return updatedUser;
-    } else {
+    } catch (err) {
+      logError(err);
       return await _userLocalDatasource.updateUser(user);
     }
   }
@@ -60,7 +64,7 @@ class UserRetoolRepository implements UserRepository {
       String? degree,
       String? school,
       int? level}) async {
-    if (await NetworkUtil.hasNetwork()) {
+    try {
       final User updatedUser = await _userDatasource.updatePartialUser(
           baseUri, id,
           firstName: firstName,
@@ -72,9 +76,11 @@ class UserRetoolRepository implements UserRepository {
           level: level);
       _userLocalDatasource.setUser(updatedUser).catchError((err) {
         logError(err);
+        return updatedUser;
       });
       return updatedUser;
-    } else {
+    } catch (err) {
+      logError(err);
       final User updatedUser = await _userLocalDatasource.updatePartialUser(id,
           firstName: firstName,
           lastName: lastName,

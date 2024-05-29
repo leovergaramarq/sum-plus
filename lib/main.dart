@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:sum_plus/my_app.dart';
 
 import 'package:sum_plus/ui/controller/auth_controller.dart';
@@ -15,7 +17,11 @@ import 'package:sum_plus/data/repositories/auth_authserver_repository.dart';
 import 'package:sum_plus/data/repositories/session_retool_repository.dart';
 import 'package:sum_plus/data/repositories/user_retool_repository.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Hive.initFlutter();
+
   Get.put<AuthRepository>(AuthAuthserverRepository());
   Get.put<SessionRepository>(SessionRetoolRepository());
   Get.put<UserRepository>(UserRetoolRepository());
