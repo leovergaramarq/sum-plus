@@ -25,9 +25,7 @@ class UserLocalDatasource {
       String? degree,
       String? school,
       int? level}) async {
-    if (prefs == null) {
-      prefs = await SharedPreferences.getInstance();
-    }
+    prefs ??= await SharedPreferences.getInstance();
 
     final User? user = await _getUser();
     if (user == null) {
@@ -46,9 +44,7 @@ class UserLocalDatasource {
   }
 
   Future<User?> _getUser() async {
-    if (prefs == null) {
-      prefs = await SharedPreferences.getInstance();
-    }
+    prefs ??= await SharedPreferences.getInstance();
     final String? userString = prefs!.getString(userKey);
     if (userString == null) return null;
     final Map<String, dynamic> userMap = jsonDecode(userString);
@@ -56,9 +52,7 @@ class UserLocalDatasource {
   }
 
   Future<User> _setUser(User user) async {
-    if (prefs == null) {
-      prefs = await SharedPreferences.getInstance();
-    }
+    prefs ??= await SharedPreferences.getInstance();
     final String userString = jsonEncode(user.toJson());
     final bool result = await prefs!.setString(userKey, userString);
     if (!result) {
@@ -68,16 +62,12 @@ class UserLocalDatasource {
   }
 
   Future<bool> removeUser() async {
-    if (prefs == null) {
-      prefs = await SharedPreferences.getInstance();
-    }
+    prefs ??= await SharedPreferences.getInstance();
     return await prefs!.remove(userKey);
   }
 
   Future<bool> containsUser() async {
-    if (prefs == null) {
-      prefs = await SharedPreferences.getInstance();
-    }
+    prefs ??= await SharedPreferences.getInstance();
     return prefs!.containsKey(userKey);
   }
 }

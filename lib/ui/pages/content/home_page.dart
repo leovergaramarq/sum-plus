@@ -1,14 +1,13 @@
+import 'package:loggy/loggy.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:math';
-import 'package:shared_preferences/shared_preferences.dart';
 
-// import 'package:sum_plus/ui/pages/auth/login_page.dart';
 import 'package:sum_plus/ui/pages/content/quest_page.dart';
 import 'package:sum_plus/ui/widgets/app_bar_widget.dart';
 import 'package:sum_plus/ui/widgets/bottom_nav_bar_widget.dart';
 import 'package:sum_plus/ui/widgets/level_stars_widget.dart';
-import 'package:sum_plus/ui/utils/auth_util.dart';
 
 import 'package:sum_plus/ui/controller/auth_controller.dart';
 import 'package:sum_plus/ui/controller/question_controller.dart';
@@ -22,10 +21,10 @@ class HomePage extends StatefulWidget {
   bool fetchSessions;
 
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   final AuthController _authController = Get.find<AuthController>();
   final QuestionController _questionController = Get.find<QuestionController>();
   final UserController _userController = Get.find<UserController>();
@@ -38,7 +37,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           .getSessionsFromUser(
               _authController.isLoggedIn ? _userController.user.email : null,
               limit: _sessionController.numSummarizeSessions)
-          .catchError((e) => print(e));
+          .catchError((err) {
+        logError(err);
+      });
     }
     super.initState();
   }
@@ -73,8 +74,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           }),
           const SizedBox(height: 16),
           Obx(() {
-            // print(
-            //     '_sessionController.areSessionsFetched ${_sessionController.areSessionsFetched}');
             if (!_sessionController.areSessionsFetched) {
               return const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -83,7 +82,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
             }
 
             if (_sessionController.sessions.isEmpty) {
-              return const Text('No sessions yet',
+              return const Text(
+                  'Start your exercise to initiate your progress!',
                   style: TextStyle(
                       fontSize: 18,
                       color: Colors.grey,
@@ -108,6 +108,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 (totalCorrectAnswers / totalAnswers * 100).round();
 
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -135,7 +136,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   ],
                 ),
               ],
-              crossAxisAlignment: CrossAxisAlignment.start,
             );
           })
         ],
@@ -145,11 +145,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    // SharedPreferences.getInstance().then((prefs) async {
-    //   print(prefs.getString('user'));
-    // });
     return Scaffold(
-      backgroundColor: Color(0xF2F2F2).withOpacity(1),
       appBar: AppBarWidget(text: 'Home', logoutButton: true),
       body: SingleChildScrollView(
         child: Container(

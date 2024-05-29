@@ -1,3 +1,4 @@
+import 'package:loggy/loggy.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -34,13 +35,19 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     if (_authController.isLoggedIn || _authController.isGuest) {
-      _authController.logOut().catchError((e) => print(e));
+      _authController.logOut().catchError((err) {
+        logError(err);
+      });
     }
     if (_userController.isUserFetched) {
-      _userController.resetUser().catchError((e) => print(e));
+      _userController.resetUser().catchError((err) {
+        logError(err);
+      });
     }
     if (_sessionController.areSessionsFetched) {
-      _sessionController.resetSessions().catchError((e) => print(e));
+      _sessionController.resetSessions().catchError((err) {
+        logError(err);
+      });
     }
     _questionController.resetLevel();
   }
@@ -49,8 +56,8 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     BuildContext context;
     try {
       context = _scaffoldKey.currentContext!;
-    } catch (e) {
-      print(e);
+    } catch (err) {
+      logError(err);
       return;
     }
     // this line dismiss the keyboard by taking away the focus of the TextFormField and giving it to an unused
@@ -60,8 +67,8 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     // Save form
     try {
       form!.save();
-    } catch (e) {
-      print(e);
+    } catch (err) {
+      logError(err);
       return;
     }
 
@@ -75,28 +82,31 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
     try {
       await _userController.getUser(email);
       userExists = true;
-    } catch (e) {
-      print(e);
+    } catch (err) {
+      logError(err);
       userExists = false;
     }
-    print(userExists
+
+    logInfo(userExists
         ? 'User exists in Web Service: ${_userController.user}'
         : 'User doesn\'t exist in Web Service');
 
     if (!userExists) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('User doesn\'t exist in Web Service'),
-      ));
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('User doesn\'t exist in Web Service'),
+          duration: Duration(seconds: 3),
+        ));
+      }
       return;
     }
     // Login in Auth Service
     bool loggedIn;
     try {
       await _authController.login(email, _passwordController.text);
-      // print('Success');
       loggedIn = true;
-    } catch (e) {
-      print(e);
+    } catch (err) {
+      logError(err);
       loggedIn = false;
     }
 
@@ -105,22 +115,28 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
         try {
           _questionController.setLevel(_userController.user.level!);
         } catch (err) {
-          print('Couldn\'t set level ${_userController.user.level}');
-          print(err);
+          logInfo('Couldn\'t set level ${_userController.user.level}');
+          logError(err);
         }
 
         Get.offAll(() => HomePage(
               key: const Key('HomePage'),
             ));
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Unexpected error'),
-        ));
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Unexpected error'),
+            duration: Duration(seconds: 3),
+          ));
+        }
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Login failed'),
-      ));
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Login failed'),
+          duration: Duration(seconds: 3),
+        ));
+      }
     }
   }
 
@@ -142,7 +158,6 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xF2F2F2).withOpacity(1),
         key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
         body: SafeArea(

@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'package:loggy/loggy.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class NetworkUtil {
@@ -6,14 +6,12 @@ class NetworkUtil {
 
   static Future<bool> hasNetwork() async {
     try {
-      // throw new Exception("Test Exception");
       final ConnectivityResult connectivityResult =
           await (Connectivity().checkConnectivity());
-      // print(connectivityResult.toString());
       lastNetworkCheck = connectivityResult == ConnectivityResult.wifi ||
           connectivityResult == ConnectivityResult.mobile;
-    } catch (e) {
-      print(e);
+    } catch (err) {
+      logError(err);
       lastNetworkCheck = false;
     }
     return lastNetworkCheck;

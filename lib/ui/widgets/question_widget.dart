@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:sum_plus/domain/models/question.dart';
 
 class QuestionWidget extends StatelessWidget {
-  QuestionWidget({Key? key, required this.question});
+  const QuestionWidget({super.key, required this.question});
 
-  late Question question;
+  final Question question;
 
   @override
   Widget build(BuildContext context) {
@@ -13,17 +13,17 @@ class QuestionWidget extends StatelessWidget {
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Text(
         question.num1.toString(),
-        style: TextStyle(fontSize: 56),
+        style: const TextStyle(fontSize: 56),
       ),
-      SizedBox(width: 16),
+      const SizedBox(width: 16),
       Text(
         question.opString,
-        style: TextStyle(fontSize: 56, color: Colors.purple),
+        style: const TextStyle(fontSize: 56, color: Colors.purple),
       ),
-      SizedBox(width: 16),
+      const SizedBox(width: 16),
       Text(
         question.num2.toString(),
-        style: TextStyle(fontSize: 56),
+        style: const TextStyle(fontSize: 56),
       )
     ]));
   }

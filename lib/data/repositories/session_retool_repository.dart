@@ -1,4 +1,5 @@
-// import 'dart:async';
+import 'package:loggy/loggy.dart';
+
 import 'package:sum_plus/data/datasources/remote/session_datasource.dart';
 import 'package:sum_plus/data/datasources/local/session_local_datasource.dart';
 import 'package:sum_plus/data/utils/network_util.dart';
@@ -43,15 +44,6 @@ class SessionRetoolRepository implements SessionRepository {
       final Session newSession =
           await _sessionDatasource.addSession(baseUri, session);
 
-      // _sessionDatasource
-      //     .getSessionsFromUser(
-      //       baseUri,
-      //       session.userEmail,
-      //     )
-      //     .then(
-      //         (sessions) => _sessionLocalDatasource.setSessions(true, sessions))
-      //     .catchError((e) => print(e));
-
       _sessionLocalDatasource.addSession(true, newSession);
 
       return newSession;
@@ -72,12 +64,12 @@ class SessionRetoolRepository implements SessionRepository {
       try {
         Session newSession =
             await _sessionDatasource.addSession(baseUri, e.data);
-        print('Missing session added!');
+        logInfo('Missing session added!');
         e.data = newSession;
         e.isUpToDate = true;
         return true;
-      } catch (e) {
-        print(e);
+      } catch (err) {
+        logError(err);
         return false;
       }
     }).toList();
@@ -87,10 +79,10 @@ class SessionRetoolRepository implements SessionRepository {
       if (processed.contains(true)) {
         await _sessionLocalDatasource.setSessionsStore(sessionsStore,
             replaceNotUpToDate: true);
-        print('Missing sessions updated locally!');
+        logInfo('Missing sessions updated locally!');
       }
-    } catch (e) {
-      print(e);
+    } catch (err) {
+      logError(err);
     }
   }
 

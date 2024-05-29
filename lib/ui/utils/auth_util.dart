@@ -13,17 +13,17 @@ class AuthUtil {
       await showDialog<bool>(
           context: context,
           builder: (BuildContext context) => AlertDialog(
-                title: Text("Logout"),
-                content: Text("Are you sure you want to logout?"),
+                title: const Text("Logout"),
+                content: const Text("Are you sure you want to logout?"),
                 actions: [
                   TextButton(
-                    child: Text("Cancel"),
+                    child: const Text("Cancel"),
                     onPressed: () {
                       Navigator.of(context).pop(false);
                     },
                   ),
                   TextButton(
-                    child: Text("Continue"),
+                    child: const Text("Continue"),
                     onPressed: () {
                       Navigator.of(context).pop(true);
                     },

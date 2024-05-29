@@ -6,7 +6,7 @@ import 'package:sum_plus/ui/pages/content/profile_page.dart';
 import 'package:sum_plus/ui/pages/content/history_page.dart';
 
 class BottomNavBarWidget extends StatelessWidget {
-  BottomNavBarWidget({Key? key, required this.section}) : super(key: key);
+  const BottomNavBarWidget({Key? key, required this.section}) : super(key: key);
 
   final BottomNavBarWidgetSection section;
 

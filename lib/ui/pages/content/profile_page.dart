@@ -16,17 +16,16 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xF2F2F2).withOpacity(1),
       appBar: AppBarWidget(text: 'Profile', logoutButton: true),
       bottomNavigationBar:
           BottomNavBarWidget(section: BottomNavBarWidgetSection.profile),
       body: ListView(
         children: [
-          SizedBox(height: 20.0), // Espacio entre AppBar y Container
+          const SizedBox(height: 20.0), // Espacio entre AppBar y Container
           Center(
             child: Container(
               color: Colors.white,
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               // height: 210.0,
               width: 500.0,
               child: Row(
@@ -38,7 +37,7 @@ class ProfilePage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Personal Info',
                             style: TextStyle(
                               fontSize: 20.0,
@@ -46,34 +45,34 @@ class ProfilePage extends StatelessWidget {
                               fontFamily: 'Itim',
                             ),
                           ),
-                          SizedBox(height: 16.0),
+                          const SizedBox(height: 16.0),
                           Text(
                             'Email:  ${_userController.user.email}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16.0,
                               fontFamily: 'Itim',
                             ),
                           ),
-                          SizedBox(height: 8.0),
+                          const SizedBox(height: 8.0),
                           Text(
                             'School: ${_userController.user.school}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16.0,
                               fontFamily: 'Itim',
                             ),
                           ),
-                          SizedBox(height: 8.0),
+                          const SizedBox(height: 8.0),
                           Text(
                             'Degree: ${_userController.user.degree}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16.0,
                               fontFamily: 'Itim',
                             ),
                           ),
-                          SizedBox(height: 8.0),
+                          const SizedBox(height: 8.0),
                           Text(
                             'Birthdate: ${_userController.user.birthDate}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16.0,
                               fontFamily: 'Itim',
                             ),
@@ -83,16 +82,13 @@ class ProfilePage extends StatelessWidget {
                     ),
                   Expanded(
                     flex: 1,
-                    child: Container(
-                      // width: double.infinity,
-                      child: CircleAvatar(
-                        radius: _authController.isLoggedIn
-                            ? 90
-                            : MediaQuery.of(context).size.width * 0.5,
-                        backgroundColor: Colors.grey,
-                        backgroundImage:
-                            Image.asset('assets/img/profile_photo_2.jpg').image,
-                      ),
+                    child: CircleAvatar(
+                      radius: _authController.isLoggedIn
+                          ? 90
+                          : MediaQuery.of(context).size.width * 0.5,
+                      backgroundColor: Colors.grey,
+                      backgroundImage:
+                          Image.asset('assets/img/profile_photo_2.jpg').image,
                     ),
                   ),
                 ],

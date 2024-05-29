@@ -1,3 +1,4 @@
+import 'package:loggy/loggy.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,10 +14,10 @@ class FirstPage extends StatefulWidget {
   const FirstPage({Key? key}) : super(key: key);
 
   @override
-  _FirstPageState createState() => _FirstPageState();
+  FirstPageState createState() => FirstPageState();
 }
 
-class _FirstPageState extends State<FirstPage> {
+class FirstPageState extends State<FirstPage> {
   final AuthController _authController = Get.find<AuthController>();
   final UserController _userController = Get.find<UserController>();
   final SessionController _sessionController = Get.find<SessionController>();
@@ -38,8 +39,8 @@ class _FirstPageState extends State<FirstPage> {
           if (_sessionController.areSessionsFetched)
             _sessionController.resetSessions(),
         ]);
-      } catch (e) {
-        print(e);
+      } catch (err) {
+        logError(err);
       }
       _questionController.resetLevel();
       Get.to(
@@ -53,7 +54,6 @@ class _FirstPageState extends State<FirstPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xF2F2F2).withOpacity(1),
       body: Stack(
         children: [
           Image.asset(
@@ -66,7 +66,7 @@ class _FirstPageState extends State<FirstPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Sum+',
                   style: TextStyle(
                     fontFamily: 'Itim',
@@ -75,7 +75,7 @@ class _FirstPageState extends State<FirstPage> {
                     color: Colors.black,
                   ),
                 ),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 ElevatedButton(
                   key: const Key('LoginButton'),
                   onPressed: onStart,
@@ -84,7 +84,7 @@ class _FirstPageState extends State<FirstPage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32.0),
                     ),
-                    minimumSize: Size(200, 48),
+                    minimumSize: const Size(200, 48),
                   ),
                   child: const Text(
                     'Let\'s start!',

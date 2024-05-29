@@ -1,3 +1,4 @@
+import 'package:loggy/loggy.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -38,13 +39,19 @@ class _SignUpPageState extends State<SignUpPage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     if (_authController.isLoggedIn || _authController.isGuest) {
-      _authController.logOut().catchError((e) => print(e));
+      _authController.logOut().catchError((err) {
+        logError(err);
+      });
     }
     if (_userController.isUserFetched) {
-      _userController.resetUser().catchError((e) => print(e));
+      _userController.resetUser().catchError((err) {
+        logError(err);
+      });
     }
     if (_sessionController.areSessionsFetched) {
-      _sessionController.resetSessions().catchError((e) => print(e));
+      _sessionController.resetSessions().catchError((err) {
+        logError(err);
+      });
     }
     _questionController.resetLevel();
   }
@@ -53,8 +60,8 @@ class _SignUpPageState extends State<SignUpPage> with WidgetsBindingObserver {
     BuildContext context;
     try {
       context = _scaffoldKey.currentContext!;
-    } catch (e) {
-      print(e);
+    } catch (err) {
+      logError(err);
       return;
     }
 
@@ -64,10 +71,9 @@ class _SignUpPageState extends State<SignUpPage> with WidgetsBindingObserver {
 
     // Save form
     try {
-      // print(form);
       form!.save();
-    } catch (e) {
-      print(e);
+    } catch (err) {
+      logError(err);
       return;
     }
 
@@ -91,10 +97,11 @@ class _SignUpPageState extends State<SignUpPage> with WidgetsBindingObserver {
     try {
       await _userController.getUser(email);
       userExists = true;
-    } catch (e) {
+    } catch (err) {
       userExists = false;
     }
-    print(userExists
+
+    logInfo(userExists
         ? 'User exists in Web Service: ${_userController.user}'
         : 'User doesn\'t exist in Web Service');
 
@@ -111,16 +118,18 @@ class _SignUpPageState extends State<SignUpPage> with WidgetsBindingObserver {
             firstName: newUser.firstName,
             lastName: newUser.lastName);
         userUpdated = true;
-      } catch (e) {
-        print(e);
+      } catch (err) {
+        logError(err);
         userUpdated = false;
       }
-      print(userUpdated ? 'User updated' : 'User not updated');
 
       if (!userUpdated) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('User update failed in Web Service'),
-        ));
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('User update failed in Web Service'),
+            duration: Duration(seconds: 3),
+          ));
+        }
         return;
       }
     } else {
@@ -129,16 +138,18 @@ class _SignUpPageState extends State<SignUpPage> with WidgetsBindingObserver {
       try {
         await _userController.addUser(newUser);
         userCreated = true;
-      } catch (e) {
-        print(e);
+      } catch (err) {
+        logError(err);
         userCreated = false;
       }
-      print(userCreated ? 'User created' : 'User not created');
 
       if (!userCreated) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('User creation failed in Web Service'),
-        ));
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('User creation failed in Web Service'),
+            duration: Duration(seconds: 3),
+          ));
+        }
         return;
       }
     }
@@ -148,11 +159,11 @@ class _SignUpPageState extends State<SignUpPage> with WidgetsBindingObserver {
     try {
       await _authController.signUp(email, _passwordController.text);
       signedUp = true;
-    } catch (e) {
-      print(e);
+    } catch (err) {
+      logError(err);
       signedUp = false;
     }
-    print(signedUp ? 'Signed up' : 'Not signed up');
+    logInfo(signedUp ? 'Signed up' : 'Not signed up');
 
     if (signedUp) {
       if (_authController.isLoggedIn) {
@@ -160,8 +171,8 @@ class _SignUpPageState extends State<SignUpPage> with WidgetsBindingObserver {
           try {
             _questionController.setLevel(_userController.user.level!);
           } catch (err) {
-            print('Couldn\'t set level ${_userController.user.level}');
-            print(err);
+            logInfo('Couldn\'t set level ${_userController.user.level}');
+            logError(err);
           }
         }
 
@@ -174,9 +185,12 @@ class _SignUpPageState extends State<SignUpPage> with WidgetsBindingObserver {
             ));
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Registration failed'),
-      ));
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Registration failed'),
+          duration: Duration(seconds: 3),
+        ));
+      }
     }
   }
 
@@ -189,7 +203,6 @@ class _SignUpPageState extends State<SignUpPage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xF2F2F2).withOpacity(1),
         key: _scaffoldKey,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
@@ -300,7 +313,7 @@ class _SignUpPageState extends State<SignUpPage> with WidgetsBindingObserver {
                             DateTime date;
                             try {
                               date = DateTime.parse(value);
-                            } catch (e) {
+                            } catch (err) {
                               return "Enter birthdate in valid format";
                             }
                             if (date.isAfter(DateTime.now())) {
@@ -350,11 +363,12 @@ class _SignUpPageState extends State<SignUpPage> with WidgetsBindingObserver {
                           key: const Key('ButtonSignUpSubmit'),
                           onPressed: onSubmit,
                           style: OutlinedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 166, 137, 204),
+                            backgroundColor:
+                                const Color.fromARGB(255, 166, 137, 204),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                            minimumSize: Size(100, 40),
+                            minimumSize: const Size(100, 40),
                           ),
                           child: const Text("Submit",
                               style: TextStyle(

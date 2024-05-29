@@ -1,3 +1,4 @@
+import 'package:loggy/loggy.dart';
 import 'dart:async';
 import 'dart:math';
 
@@ -23,10 +24,10 @@ class QuestPage extends StatefulWidget {
   const QuestPage({Key? key}) : super(key: key);
 
   @override
-  _QuestPageState createState() => _QuestPageState();
+  QuestPageState createState() => QuestPageState();
 }
 
-class _QuestPageState extends State<QuestPage> with WidgetsBindingObserver {
+class QuestPageState extends State<QuestPage> with WidgetsBindingObserver {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final QuestionController _questionController = Get.find<QuestionController>();
@@ -45,11 +46,10 @@ class _QuestPageState extends State<QuestPage> with WidgetsBindingObserver {
     if (_authController.isLoggedIn) {
       _levelListener = _questionController.listenLevel((level) async {
         if (level == _userController.user.level) return;
-        print('Updating level from ${_userController.user.level} to $level');
         try {
           await _userController.updatePartialUser(level: level);
-        } catch (e) {
-          print(e);
+        } catch (err) {
+          logError(err);
         }
       });
     }
@@ -58,13 +58,12 @@ class _QuestPageState extends State<QuestPage> with WidgetsBindingObserver {
   @override
   void dispose() {
     super.dispose();
-    print('Disposing QuestPage');
     _answerTimer.cancel();
     if (_levelListener != null) {
       try {
         _levelListener!.cancel();
-      } catch (e) {
-        print(e);
+      } catch (err) {
+        logError(err);
       }
     }
   }
@@ -86,7 +85,9 @@ class _QuestPageState extends State<QuestPage> with WidgetsBindingObserver {
 
       _sessionController
           .addSession(_questionController.session)
-          .catchError((e) => print(e));
+          .catchError((err) {
+        logError(err);
+      });
       Get.off(() => const SessionSummaryPage(
             key: Key('SessionSummaryPage'),
           ));
@@ -97,17 +98,17 @@ class _QuestPageState extends State<QuestPage> with WidgetsBindingObserver {
     if (!_questionController.didAnswer) nextQuestion();
   }
 
-  Widget OptionalContinueWidget() {
+  Widget optionalContinueWidget() {
     return Obx(() {
       if (_questionController.didAnswer) {
         return Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
             ElevatedButton(
               onPressed: nextQuestion,
-              child: Text('Next', style: TextStyle(fontSize: 20)),
+              child: const Text('Next', style: TextStyle(fontSize: 20)),
             )
           ],
         );
@@ -119,7 +120,7 @@ class _QuestPageState extends State<QuestPage> with WidgetsBindingObserver {
     });
   }
 
-  Widget QuestionOrLoadWidget() {
+  Widget questionOrLoadWidget() {
     return Obx(() {
       if (_questionController.isQuestionReady) {
         return QuestionWidget(question: _questionController.question);
@@ -144,48 +145,48 @@ class _QuestPageState extends State<QuestPage> with WidgetsBindingObserver {
     BuildContext context;
     try {
       context = _scaffoldKey.currentContext!;
-    } catch (e) {
-      print(e);
+    } catch (err) {
+      logError(err);
       return;
     }
     if (!_questionController.isQuestionReady) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Please wait for the question to load'),
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Question was not loaded yet. Try again.'),
+        duration: Duration(seconds: 2),
       ));
     } else if (_questionController.didAnswer) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('You already answered this question'),
+        duration: Duration(seconds: 2),
       ));
     } else {
       _answerTimer.cancel();
-
-      // print('seconds ${_questionController.answerSeconds}');
-
-      Answer? newAnswer =
-          _questionController.answer(_questionController.answerSeconds);
+      _questionController.answer(_questionController.answerSeconds);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (willPop) async {
+        if (!willPop) return;
+
         bool leaveSession = await Future<bool>(() async =>
             await showDialog<bool>(
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
-                      title: Text("Are you sure?"),
-                      content: Text(
+                      title: const Text("Are you sure?"),
+                      content: const Text(
                           "If you go back, the current session will not be saved."),
                       actions: [
                         TextButton(
-                          child: Text("Cancel"),
+                          child: const Text("Cancel"),
                           onPressed: () {
                             Navigator.of(context).pop(false);
                           },
                         ),
                         TextButton(
-                          child: Text("Continue"),
+                          child: const Text("Continue"),
                           onPressed: () {
                             Navigator.of(context).pop(true);
                           },
@@ -194,10 +195,8 @@ class _QuestPageState extends State<QuestPage> with WidgetsBindingObserver {
                     )) ??
             false);
         if (leaveSession) _questionController.cancelSesion();
-        return leaveSession;
       },
       child: Scaffold(
-        backgroundColor: Color(0xF2F2F2).withOpacity(1),
         key: _scaffoldKey,
         appBar: AppBarWidget(
           text: 'Exercise',
@@ -228,9 +227,9 @@ class _QuestPageState extends State<QuestPage> with WidgetsBindingObserver {
                       }),
                       Column(
                         children: [
-                          Text(
+                          const Text(
                             'Level',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.w500),
                           ),
                           Obx(() => LevelStarsWidget(
@@ -246,12 +245,12 @@ class _QuestPageState extends State<QuestPage> with WidgetsBindingObserver {
                           )),
                     ],
                   ),
-                  QuestionOrLoadWidget(),
+                  questionOrLoadWidget(),
                   Stack(
                     alignment: Alignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 300, 0),
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 300, 0),
                         child: Text(
                           '=',
                           style: TextStyle(fontSize: 56),
@@ -275,43 +274,30 @@ class _QuestPageState extends State<QuestPage> with WidgetsBindingObserver {
                       ),
                       Container(
                           width: 256,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               border: Border(
                             bottom: BorderSide(width: 3, color: Colors.black),
                           )),
                           child: Center(
                             child: Obx(() => SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
                                   child: AnswerTypingWidget(
                                       _questionController.userAnswer),
-                                  scrollDirection: Axis.horizontal,
                                 )),
                           )),
                     ],
                   ),
-                  // Stack(
-                  //   alignment: Alignment.center,
-                  //   children: [
-                  //     Positioned(
-                  //       left: 0,
-                  //       child: Text('=asd'),
-                  //     ),
-                  //     Obx(() => AnswerWidget(_questionController.userAnswer)),
-                  //     // Text(
-                  //     //   '=',
-                  //     //   style: TextStyle(fontSize: 56),
-                  //     // ),
-                  //   ],
-                  // ),
                   NumpadWidget(
                     typeNumber: typeNumber,
                     clearAnswer: clearAnswer,
                     answer: answer,
                   ),
-                  OptionalContinueWidget(),
+                  optionalContinueWidget(),
                 ],
               ),
             ),
             Align(
+              alignment: Alignment.topRight,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 36, 24, 0),
                 child: IconButton(
@@ -322,7 +308,6 @@ class _QuestPageState extends State<QuestPage> with WidgetsBindingObserver {
                       color: Colors.purple,
                     )),
               ),
-              alignment: Alignment.topRight,
             )
           ],
         ),

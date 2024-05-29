@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:sum_plus/ui/pages/auth/first_page.dart';
 
-MaterialColor myPrimarySwatch = MaterialColor(0xFF997AC1, {
+MaterialColor myPrimarySwatch = const MaterialColor(0xFF997AC1, {
   50: Color(0xFFF5EEF7),
   100: Color(0xFFE4D6E5),
   200: Color(0xFFD3BED4),
@@ -27,8 +27,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: myPrimarySwatch,
-        primaryColor: Color(0xFF997AC1),
+        primaryColor: const Color(0xFF997AC1),
         fontFamily: 'Itim',
+        scaffoldBackgroundColor: const Color(0xFFf2f2f2),
       ),
       home: const FirstPage(
         key: Key('FirstPage'),

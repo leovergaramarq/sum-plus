@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:loggy/loggy.dart';
 
 import 'package:sum_plus/domain/use_case/question_use_case.dart';
 
@@ -38,15 +39,15 @@ class QuestionController extends GetxController {
 
   void startSession(String userEmail) {
     if (isSessionActive) {
-      print('session is already active');
+      logInfo('session is already active');
       return;
     }
 
     if (userEmail.isEmpty) {
-      print('email is empty');
+      logInfo('userEmail is empty');
     }
 
-    print('Starting session');
+    logInfo('Starting session');
     _session.value = Session.defaultSession();
     _session.value.userEmail = userEmail;
     _isSessionActive.value = true;
@@ -54,7 +55,7 @@ class QuestionController extends GetxController {
 
   void endSession() {
     if (!isSessionActive) {
-      print('session is not active');
+      logInfo('session is not active');
       return;
     }
 
@@ -63,7 +64,7 @@ class QuestionController extends GetxController {
 
   void cancelSesion() {
     if (!isSessionActive) {
-      print('session is not active');
+      logInfo('session is not active');
       return;
     }
 
@@ -76,7 +77,7 @@ class QuestionController extends GetxController {
 
   Question? getQuestion() {
     if (!isSessionActive) {
-      print('session is not active');
+      logInfo('session is not active');
       return null;
     }
 
@@ -106,7 +107,7 @@ class QuestionController extends GetxController {
 
   void typeNumber(int typedNumber) {
     if (!isSessionActive || !isQuestionReady) {
-      print('session is not active or question is not ready');
+      logInfo('session is not active or question is not ready');
       return;
     }
 
@@ -116,7 +117,7 @@ class QuestionController extends GetxController {
 
   void clearAnswer() {
     if (!isSessionActive || !isQuestionReady) {
-      print('session is not active or question is not ready');
+      logInfo('session is not active or question is not ready');
       return;
     }
 
@@ -125,7 +126,7 @@ class QuestionController extends GetxController {
 
   Answer? answer(int seconds) {
     if (!isSessionActive || !isQuestionReady) {
-      print('session is not active or question is not ready');
+      logInfo('session is not active or question is not ready');
       return null;
     }
 
@@ -142,15 +143,13 @@ class QuestionController extends GetxController {
     _session.refresh();
 
     _level.value = _questionUseCase.getNewLevel(session, level);
-    print('newLevel $level');
-    // print(session.answers.length);
 
     return newAnswer;
   }
 
   bool isLastAnswerCorrect() {
     if (!isSessionActive || !isQuestionReady) {
-      print('session is not active or question is not ready');
+      logInfo('session is not active or question is not ready');
       return false;
     }
 
@@ -161,7 +160,7 @@ class QuestionController extends GetxController {
 
   void setAnswerSeconds(int answerSeconds) {
     if (!isSessionActive || !isQuestionReady) {
-      print('session is not active or question is not ready');
+      logInfo('session is not active or question is not ready');
       return;
     }
     _answerSeconds.value = answerSeconds;
@@ -176,7 +175,6 @@ class QuestionController extends GetxController {
   }
 
   void resetStates() {
-    print('Resetting states');
     // _level.value = 1;
     _userAnswer.value = 0;
     _question.value = Question.defaultQuestion();

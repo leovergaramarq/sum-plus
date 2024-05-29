@@ -16,9 +16,9 @@ class LevelStarsWidget extends StatelessWidget {
   final QuestionController _questionController = Get.find<QuestionController>();
 
   static final List<Color> colors = [
-    Color(0xC68663).withOpacity(1),
-    Color(0x858B94).withOpacity(1),
-    Color(0xFFDC64).withOpacity(1),
+    const Color(0x00c68663).withOpacity(1),
+    const Color(0x00858b94).withOpacity(1),
+    const Color(0x00ffdc64).withOpacity(1),
   ];
 
   int getColorIndex() {
@@ -34,9 +34,6 @@ class LevelStarsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print('level $level');
-    // print('getNumStars ${getNumStars()}');
-    // print('getColorIndex ${getColorIndex()}');
     int numStars = getNumStars();
 
     return Row(
@@ -46,15 +43,9 @@ class LevelStarsWidget extends StatelessWidget {
             (index) => Padding(
                   padding:
                       EdgeInsets.only(left: index != numStars - 1 ? gap : 0),
-                  // child: Image.asset(
-                  //   'assets/img/star_level.png', // Ruta de tu imagen personalizada
-                  //   width: starSize, // Establece el ancho de la imagen
-                  //   height: starSize, // Establece la altura de la imagen
-                  // ),
                   child: Icon(
                     Icons.star,
                     color: colors[getColorIndex()],
-                    // color: Color(0x9C5B38).withOpacity(1),
                     size: starSize,
                   ),
                 )));

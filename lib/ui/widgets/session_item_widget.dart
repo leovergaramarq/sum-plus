@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:sum_plus/domain/models/session.dart';
 
 class SessionItemWidget extends StatelessWidget {
-  SessionItemWidget({required this.session, required this.numSession});
+  const SessionItemWidget(
+      {super.key, required this.session, required this.numSession});
 
-  Session session;
-  int numSession;
+  final Session session;
+  final int numSession;
 
   Widget sessionMainInfoWidget() {
     return Column(
@@ -25,7 +26,7 @@ class SessionItemWidget extends StatelessWidget {
             )
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Row(
@@ -46,7 +47,7 @@ class SessionItemWidget extends StatelessWidget {
                   TextSpan(
                     text:
                         '${session.numCorrectAnswers}/${session.numAnswers} (',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                     ),
                   ),
@@ -61,7 +62,7 @@ class SessionItemWidget extends StatelessWidget {
                       fontSize: 18,
                     ),
                   ),
-                  TextSpan(
+                  const TextSpan(
                     text: ')',
                     style: TextStyle(
                       fontSize: 18,
@@ -106,14 +107,14 @@ class SessionItemWidget extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                       color: Colors.grey.shade700),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 90,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      '${Session.formatDate(session.dateStart)}',
+                      Session.formatDate(session.dateStart),
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,

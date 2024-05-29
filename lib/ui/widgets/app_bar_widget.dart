@@ -1,6 +1,6 @@
+import 'package:loggy/loggy.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:sum_plus/ui/controller/auth_controller.dart';
 import 'package:sum_plus/ui/controller/user_controller.dart';
@@ -32,17 +32,21 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   Future<void> onLogout(BuildContext context) async {
     if (!(await _authUtil.validateLogout(context))) return;
 
-    _authController.logOut().catchError((e) => print(e));
+    _authController.logOut().catchError((err) {
+      logError(err);
+    });
 
     if (_userController.isUserFetched) {
-      _userController.resetUser().catchError((e) => print(e));
+      _userController.resetUser().catchError((err) {
+        logError(err);
+      });
     }
     if (_sessionController.areSessionsFetched) {
-      _sessionController.resetSessions().catchError((e) => print(e));
+      _sessionController.resetSessions().catchError((err) {
+        logError(err);
+      });
     }
     _questionController.resetLevel();
-
-    // await (await SharedPreferences.getInstance()).clear(); // clear localStorage on logout for debugging
 
     Get.offAll(() => const LoginPage(
           key: Key('LoginPage'),

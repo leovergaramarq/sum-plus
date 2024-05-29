@@ -19,7 +19,6 @@ class UserDatasource {
         final data = jsonDecode(response.body);
 
         List<User> users = List<User>.from(data.map((x) => User.fromJson(x)));
-        print(data);
         if (users.isNotEmpty) return users[0];
         return Future.error('User not found');
       } else {

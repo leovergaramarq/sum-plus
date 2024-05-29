@@ -4,10 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sum_plus/domain/models/session.dart';
 
 class SessionLocalDatasource {
-  // SessionLocalDatasource() {
-  //   SharedPreferences.getInstance().then((value) => prefs = value);
-  // }
-
   final int maxSessions = 100;
   final String sessionsKey = 'sessions';
   SharedPreferences? prefs;
@@ -19,9 +15,7 @@ class SessionLocalDatasource {
       await _getSessionsStoreFromUser(limit: limit);
 
   Future<Session> addSession(bool isUpToDate, Session session) async {
-    if (prefs == null) {
-      prefs = await SharedPreferences.getInstance();
-    }
+    prefs ??= await SharedPreferences.getInstance();
     List<SessionStore> sessionsStore = await _getSessionsStoreFromUser();
     if (sessionsStore.length >= maxSessions) {
       sessionsStore = sessionsStore
@@ -43,9 +37,7 @@ class SessionLocalDatasource {
 
   Future<void> setSessionsStore(List<SessionStore> sessionsStore,
       {bool replaceNotUpToDate = false}) async {
-    if (prefs == null) {
-      prefs = await SharedPreferences.getInstance();
-    }
+    prefs ??= await SharedPreferences.getInstance();
     if (!replaceNotUpToDate) {
       List<SessionStore> missingSessions = (await _getSessionsStoreFromUser())
           .where((e) => !e.isUpToDate)
@@ -63,9 +55,7 @@ class SessionLocalDatasource {
 
   Future<void> setSessions(bool isUpToDate, List<Session> sessions,
       {bool replaceNotUpToDate = false}) async {
-    if (prefs == null) {
-      prefs = await SharedPreferences.getInstance();
-    }
+    prefs ??= await SharedPreferences.getInstance();
 
     List<SessionStore> sessionsStore =
         sessions.map((e) => SessionStore(e, isUpToDate)).toList();
@@ -86,9 +76,7 @@ class SessionLocalDatasource {
   }
 
   Future<List<SessionStore>> _getSessionsStoreFromUser({int? limit}) async {
-    if (prefs == null) {
-      prefs = await SharedPreferences.getInstance();
-    }
+    prefs ??= await SharedPreferences.getInstance();
     final String? sessionsStoreString = prefs!.getString(sessionsKey);
     if (sessionsStoreString == null) return [];
 
@@ -103,16 +91,12 @@ class SessionLocalDatasource {
   }
 
   Future<bool> removeSessions() async {
-    if (prefs == null) {
-      prefs = await SharedPreferences.getInstance();
-    }
+    prefs ??= await SharedPreferences.getInstance();
     return await prefs!.remove(sessionsKey);
   }
 
   Future<bool> containsSessions() async {
-    if (prefs == null) {
-      prefs = await SharedPreferences.getInstance();
-    }
+    prefs ??= await SharedPreferences.getInstance();
     return prefs!.containsKey(sessionsKey);
   }
 }

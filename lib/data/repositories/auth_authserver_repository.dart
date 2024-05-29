@@ -4,20 +4,8 @@ import 'package:sum_plus/data/datasources/remote/auth_datasource.dart';
 import 'package:sum_plus/data/datasources/local/auth_local_datasource.dart';
 
 class AuthAuthserverRepository implements AuthRepository {
-  // AuthAuthserverRepository() {
-  //   try {
-  //     String? localToken = _authLocalDatasource.getToken();
-  //     if (localToken != null) {
-  //       token = localToken;
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
-
   final AuthDatasource _authDatasource = AuthDatasource();
   final AuthLocalDatasource _authLocalDatasource = AuthLocalDatasource();
-  // String token = "";
   // the base url of the API should end without the /
   final String _baseUrl =
       "http://ip172-18-0-93-cpbb2i0l2o9000alsci0-8000.direct.labs.play-with-docker.com";

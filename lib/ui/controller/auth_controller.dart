@@ -2,13 +2,8 @@ import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 
 import 'package:sum_plus/domain/use_case/auth_use_case.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
-  // AuthController(): super() {
-  //   _isLoggedIn.value = _authUseCase.isLoggedIn();
-  // }
-
   final AuthUseCase _authUseCase = AuthUseCase();
   final RxBool _isLoggedIn = RxBool(false);
   final RxBool _isGuest = RxBool(false);
@@ -36,7 +31,6 @@ class AuthController extends GetxController {
   }
 
   Future<void> logOut() async {
-    print('Logging out');
     await _authUseCase.logOut();
     _isLoggedIn.value = false;
     _isGuest.value = false;

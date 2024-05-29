@@ -17,8 +17,8 @@ class UserController extends GetxController {
     super.onInit();
     try {
       await getUser(null);
-    } catch (e) {
-      print(e);
+    } catch (err) {
+      logError(err);
     }
   }
 

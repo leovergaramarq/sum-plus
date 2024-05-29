@@ -2,26 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:sum_plus/domain/models/answer.dart';
 
 class AnswerItemWidget extends StatelessWidget {
-  AnswerItemWidget({required this.answer, required this.numAnswer});
+  const AnswerItemWidget(
+      {required this.answer, required this.numAnswer, Key? key})
+      : super(key: key);
 
-  Answer answer;
-  int numAnswer;
+  final Answer answer;
+  final int numAnswer;
 
   Widget answerMainInfoWidget() {
     List<Widget> children = [
       Text(
         'Question: ${answer.question.toString()}',
-        style: TextStyle(
+        style: const TextStyle(
             fontSize: 18, fontWeight: FontWeight.w400, fontFamily: 'Itim'),
       ),
-      SizedBox(
+      const SizedBox(
         height: 8,
       ),
       Row(
         children: [
           Text(
             'Your answer: ${answer.userAnswer}',
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 18, fontWeight: FontWeight.w400, fontFamily: 'Itim'),
           ),
           answer.isCorrect
@@ -32,12 +34,12 @@ class AnswerItemWidget extends StatelessWidget {
     ];
     if (!answer.isCorrect) {
       children.addAll([
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Text(
           'Correct answer: ${answer.question.getAnswer()}',
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 18, fontWeight: FontWeight.w400, fontFamily: 'Itim'),
         )
       ]);
@@ -74,9 +76,10 @@ class AnswerItemWidget extends StatelessWidget {
               children: [
                 Text(
                   '#$numAnswer',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w400),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 90,
                 ),
                 Row(
@@ -85,12 +88,12 @@ class AnswerItemWidget extends StatelessWidget {
                     Icon(
                       Icons.av_timer,
                       size: 24,
-                      color: Color(0x3C3C3C).withOpacity(1),
+                      color: const Color(0x003c3c3c).withOpacity(1),
                     ),
                     Text(
-                      '${Answer.formatTime(answer.seconds)}',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                      Answer.formatTime(answer.seconds),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w400),
                     ),
                   ],
                 )

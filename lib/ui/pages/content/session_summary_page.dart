@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'dart:math';
 
 import 'package:sum_plus/ui/pages/content/quest_page.dart';
@@ -10,7 +10,6 @@ import 'package:sum_plus/ui/widgets/answer_item_widget.dart';
 
 import 'package:sum_plus/ui/widgets/level_stars_widget.dart';
 
-import 'package:sum_plus/ui/controller/auth_controller.dart';
 import 'package:sum_plus/ui/controller/question_controller.dart';
 
 import 'package:sum_plus/domain/models/answer.dart';
@@ -19,25 +18,21 @@ class SessionSummaryPage extends StatefulWidget {
   const SessionSummaryPage({Key? key}) : super(key: key);
 
   @override
-  _SessionSummaryPageState createState() => _SessionSummaryPageState();
+  SessionSummaryPageState createState() => SessionSummaryPageState();
 }
 
-class _SessionSummaryPageState extends State<SessionSummaryPage>
+class SessionSummaryPageState extends State<SessionSummaryPage>
     with WidgetsBindingObserver {
-  // final AuthController _authController = Get.find<AuthController>();
   final QuestionController _questionController = Get.find<QuestionController>();
 
   @override
   Widget build(BuildContext context) {
     return PopScope(
       onPopInvoked: (willPop) {
-        logInfo('onPopInvoked: $willPop');
-        if (willPop) {
-          _questionController.endSession();
-        }
+        if (!willPop) return;
+        _questionController.endSession();
       },
       child: Scaffold(
-        backgroundColor: const Color(0xF2F2F2).withOpacity(1),
         appBar: AppBarWidget(
           text: 'Results',
           logoutButton: false,
@@ -65,19 +60,19 @@ class _SessionSummaryPageState extends State<SessionSummaryPage>
                                 fontFamily: 'Itim')),
                         Text(
                             '${_questionController.session.numCorrectAnswers}/${_questionController.session.numAnswers} correct answers',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Itim')),
                         Text(
                             'Total time: ${Answer.formatTime(_questionController.session.totalSeconds)}',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Itim')),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Column(
@@ -89,21 +84,9 @@ class _SessionSummaryPageState extends State<SessionSummaryPage>
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'Itim')),
-                        Container(
+                        SizedBox(
                           height: 360,
-                          // child: ListView(
-                          //   children: _questionController.session.answers
-                          //       .asMap()
-                          //       .map((i, answer) => MapEntry(
-                          //           i,
-                          //           AnswerItemWidget(
-                          //             answer: answer,
-                          //             numAnswer: i + 1,
-                          //           )))
-                          //       .values
-                          //       .toList(),
-                          // ),
-                          child: _questionController.session.answers.length != 0
+                          child: _questionController.session.answers.isNotEmpty
                               ? ListView.separated(
                                   separatorBuilder:
                                       (BuildContext context, int index) {
@@ -140,7 +123,7 @@ class _SessionSummaryPageState extends State<SessionSummaryPage>
                       child: const Text('Back to menu',
                           style: TextStyle(fontSize: 20, fontFamily: 'Itim')),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 24,
                     ),
                     ElevatedButton(

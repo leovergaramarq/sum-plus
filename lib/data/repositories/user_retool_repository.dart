@@ -1,3 +1,5 @@
+import 'package:loggy/loggy.dart';
+
 import 'package:sum_plus/data/datasources/remote/user_datasource.dart';
 import 'package:sum_plus/data/datasources/local/user_local_datasource.dart';
 import 'package:sum_plus/data/utils/network_util.dart';
@@ -18,7 +20,9 @@ class UserRetoolRepository implements UserRepository {
       return user;
     } else if (email != null) {
       user = await _userDatasource.getUser(baseUri, email);
-      _userLocalDatasource.setUser(user).catchError((e) => print(e));
+      _userLocalDatasource.setUser(user).catchError((err) {
+        logError(err);
+      });
       return user;
     } else {
       return Future.error('User not found');
@@ -28,7 +32,9 @@ class UserRetoolRepository implements UserRepository {
   @override
   Future<User> addUser(User user) async {
     final User newUser = await _userDatasource.addUser(baseUri, user);
-    _userLocalDatasource.setUser(newUser).catchError((e) => print(e));
+    _userLocalDatasource.setUser(newUser).catchError((err) {
+      logError(err);
+    });
     return newUser;
   }
 
@@ -36,7 +42,9 @@ class UserRetoolRepository implements UserRepository {
   Future<User> updateUser(User user) async {
     if (await NetworkUtil.hasNetwork()) {
       final User updatedUser = await _userDatasource.updateUser(baseUri, user);
-      _userLocalDatasource.updateUser(updatedUser).catchError((e) => print(e));
+      _userLocalDatasource.updateUser(updatedUser).catchError((err) {
+        logError(err);
+      });
       return updatedUser;
     } else {
       return await _userLocalDatasource.updateUser(user);
@@ -62,7 +70,9 @@ class UserRetoolRepository implements UserRepository {
           degree: degree,
           school: school,
           level: level);
-      _userLocalDatasource.setUser(updatedUser).catchError((e) => print(e));
+      _userLocalDatasource.setUser(updatedUser).catchError((err) {
+        logError(err);
+      });
       return updatedUser;
     } else {
       final User updatedUser = await _userLocalDatasource.updatePartialUser(id,
