@@ -35,7 +35,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initState() {
     if (widget.fetchSessions) {
       _sessionController
-          .getSessionsFromUser(_userController.user.email,
+          .getSessionsFromUser(
+              _authController.isLoggedIn ? _userController.user.email : null,
               limit: _sessionController.numSummarizeSessions)
           .catchError((e) => print(e));
     }
@@ -111,14 +112,11 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.av_timer,
-                      size: 36,
-                      color: Color(0x3C3C3C).withOpacity(1),
-                    ),
+                    Icon(Icons.av_timer, size: 36, color: Colors.grey.shade700),
                     Text(
                       'Average time per session: ${Answer.formatTime(avgSeconds)}',
-                      style: const TextStyle(fontSize: 18),
+                      style:
+                          TextStyle(fontSize: 18, color: Colors.grey.shade700),
                     )
                   ],
                 ),
@@ -128,11 +126,12 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     Icon(
                       Icons.task_outlined,
                       size: 36,
-                      color: Color(0x3C3C3C).withOpacity(1),
+                      color: Colors.grey.shade700,
                     ),
                     Text(
                         'Success: $totalCorrectAnswers/$totalAnswers ($correctPercentage%)',
-                        style: const TextStyle(fontSize: 18))
+                        style: TextStyle(
+                            fontSize: 18, color: Colors.grey.shade700))
                   ],
                 ),
               ],
@@ -166,7 +165,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                         ? 'Hello, ${_userController.user.email}!'
                         : 'Welcome to Sum+',
                     style: const TextStyle(
-                      fontSize: 24,
+                      fontSize: 28,
                       fontFamily: 'Itim',
                     ),
                   ),
@@ -183,7 +182,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
                               Align(
                                 alignment: Alignment.center,
                                 child: Image.asset(
-                                  'assets/img/exercise_bg.png',
+                                  'assets/img/exercise_bg2.png',
                                   width: 128,
                                   height: 128,
                                 ),

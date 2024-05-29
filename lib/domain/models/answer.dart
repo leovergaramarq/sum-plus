@@ -1,4 +1,5 @@
 import 'package:sum_plus/domain/models/question.dart';
+import 'package:sum_plus/ui/utils/helper_util.dart';
 
 class Answer {
   Answer(
@@ -15,22 +16,6 @@ class Answer {
   final bool isCorrect;
 
   static String formatTime(int seconds) {
-    int hours = seconds ~/ 3600;
-    int minutes = (seconds % 3600) ~/ 60;
-    int remainingSeconds = seconds % 60;
-
-    String formattedTime = '';
-
-    if (hours > 0) {
-      formattedTime += '$hours h, ';
-    }
-
-    if (minutes > 0 || hours > 0) {
-      formattedTime += '$minutes m, ';
-    }
-
-    formattedTime += '$remainingSeconds s';
-
-    return formattedTime;
+    return HelperUtil.formatTime(seconds);
   }
 }

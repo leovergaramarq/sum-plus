@@ -11,59 +11,72 @@ class UserDatasource {
       "email": email,
     }));
 
-    final http.Response response = await http.get(request);
+    try {
+      final http.Response response = await http.get(request);
 
-    if (response.statusCode == 200) {
-      //logInfo(response.body);
-      final data = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        //logInfo(response.body);
+        final data = jsonDecode(response.body);
 
-      List<User> users = List<User>.from(data.map((x) => User.fromJson(x)));
-      print(data);
-      if (users.isNotEmpty) return users[0];
-      return Future.error('User not found');
-    } else {
-      logError("Got error code ${response.statusCode}");
-      return Future.error('Error code ${response.statusCode}');
+        List<User> users = List<User>.from(data.map((x) => User.fromJson(x)));
+        print(data);
+        if (users.isNotEmpty) return users[0];
+        return Future.error('User not found');
+      } else {
+        logError("Got error code ${response.statusCode}");
+        return Future.error('Error code ${response.statusCode}');
+      }
+    } catch (err) {
+      logError("Got error $err");
+      return Future.error(err);
     }
   }
 
   Future<User> addUser(String baseUri, User user) async {
     logInfo("Web service, Adding user");
 
-    final response = await http.post(
-      Uri.parse(baseUri),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(user.toJson()),
-    );
+    try {
+      final response = await http.post(
+        Uri.parse(baseUri),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(user.toJson()),
+      );
 
-    if (response.statusCode == 201) {
-      //logInfo(response.body);
-      return Future.value(User.fromJson(jsonDecode(response.body)));
-    } else {
-      logError("Got error code ${response.statusCode}");
-      return Future.error('Error code ${response.statusCode}');
+      if (response.statusCode == 201) {
+        //logInfo(response.body);
+        return Future.value(User.fromJson(jsonDecode(response.body)));
+      } else {
+        logError("Got error code ${response.statusCode}");
+        return Future.error('Error code ${response.statusCode}');
+      }
+    } catch (err) {
+      logError("Got error $err");
+      return Future.error(err);
     }
   }
 
   Future<User> updateUser(String baseUri, User user) async {
-    final response = await http.put(
-      Uri.parse("$baseUri/${user.id}"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(user.toJson()),
-    );
+    try {
+      final response = await http.put(
+        Uri.parse("$baseUri/${user.id}"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(user.toJson()),
+      );
 
-    // print(response.statusCode);
-
-    if (response.statusCode == 200) {
-      //logInfo(response.body);
-      return Future.value(User.fromJson(jsonDecode(response.body)));
-    } else {
-      logError("Got error code ${response.statusCode}");
-      return Future.error('Error code ${response.statusCode}');
+      if (response.statusCode == 200) {
+        //logInfo(response.body);
+        return Future.value(User.fromJson(jsonDecode(response.body)));
+      } else {
+        logError("Got error code ${response.statusCode}");
+        return Future.error('Error code ${response.statusCode}');
+      }
+    } catch (err) {
+      logError("Got error $err");
+      return Future.error(err);
     }
   }
 
@@ -75,32 +88,35 @@ class UserDatasource {
       String? degree,
       String? school,
       int? level}) async {
-    final response = await http.patch(
-      Uri.parse("$baseUri/$id"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(
-        {
-          if (firstName != null) 'firstName': firstName,
-          if (lastName != null) 'lastName': lastName,
-          if (email != null) 'email': email,
-          if (birthDate != null) 'birthDate': birthDate,
-          if (degree != null) 'degree': degree,
-          if (school != null) 'school': school,
-          if (level != null) 'level': level,
+    try {
+      final response = await http.patch(
+        Uri.parse("$baseUri/$id"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
         },
-      ),
-    );
+        body: jsonEncode(
+          {
+            if (firstName != null) 'firstName': firstName,
+            if (lastName != null) 'lastName': lastName,
+            if (email != null) 'email': email,
+            if (birthDate != null) 'birthDate': birthDate,
+            if (degree != null) 'degree': degree,
+            if (school != null) 'school': school,
+            if (level != null) 'level': level,
+          },
+        ),
+      );
 
-    // print(response.statusCode);
-
-    if (response.statusCode == 200) {
-      //logInfo(response.body);
-      return Future.value(User.fromJson(jsonDecode(response.body)));
-    } else {
-      logError("Got error code ${response.statusCode}");
-      return Future.error('Error code ${response.statusCode}');
+      if (response.statusCode == 200) {
+        //logInfo(response.body);
+        return Future.value(User.fromJson(jsonDecode(response.body)));
+      } else {
+        logError("Got error code ${response.statusCode}");
+        return Future.error('Error code ${response.statusCode}');
+      }
+    } catch (err) {
+      logError("Got error $err");
+      return Future.error(err);
     }
   }
 }

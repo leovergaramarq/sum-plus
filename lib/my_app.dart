@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: myPrimarySwatch,
         primaryColor: Color(0xFF997AC1),
+        fontFamily: 'Itim',
       ),
       home: const FirstPage(
         key: Key('FirstPage'),

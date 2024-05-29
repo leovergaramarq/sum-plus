@@ -15,38 +15,47 @@ class SessionDatasource {
       if (order != null) "_order": order,
     }));
 
-    final http.Response response = await http.get(request);
+    try {
+      final http.Response response = await http.get(request);
 
-    if (response.statusCode == 200) {
-      //logInfo(response.body);
-      final data = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
 
-      sessions = List<Session>.from(data.map((x) => Session.fromJson(x)));
-    } else {
-      logError("Got error code ${response.statusCode}");
-      return Future.error('Error code ${response.statusCode}');
+        sessions = List<Session>.from(data.map((x) => Session.fromJson(x)));
+      } else {
+        logError("Got error code ${response.statusCode}");
+        return Future.error('Error code ${response.statusCode}');
+      }
+
+      return Future.value(sessions);
+    } catch (err) {
+      logError("Got error $err");
+      return Future.error(err);
     }
-
-    return Future.value(sessions);
   }
 
   Future<Session> addSession(String baseUri, Session session) async {
     logInfo("Web service, Adding session");
 
-    final response = await http.post(
-      Uri.parse(baseUri),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(session.toJson()),
-    );
+    try {
+      final response = await http.post(
+        Uri.parse(baseUri),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(session.toJson()),
+      );
 
-    if (response.statusCode == 201) {
-      //logInfo(response.body);
-      return Future.value(Session.fromJson(jsonDecode(response.body)));
-    } else {
-      logError("Got error code ${response.statusCode}");
-      return Future.error('Error code ${response.statusCode}');
+      if (response.statusCode == 201) {
+        //logInfo(response.body);
+        return Future.value(Session.fromJson(jsonDecode(response.body)));
+      } else {
+        logError("Got error code ${response.statusCode}");
+        return Future.error('Error code ${response.statusCode}');
+      }
+    } catch (err) {
+      logError("Got error $err");
+      return Future.error(err);
     }
   }
 }

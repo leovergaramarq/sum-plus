@@ -1,4 +1,5 @@
 import 'package:sum_plus/domain/models/answer.dart';
+import 'package:sum_plus/ui/utils/helper_util.dart';
 
 class Session {
   Session({
@@ -74,4 +75,12 @@ class Session {
         'avgLevel': avgLevel,
         'dateStart': dateStart,
       };
+
+  static String formatTime(int seconds) {
+    return HelperUtil.formatTime(seconds);
+  }
+
+  static String formatDate(String date) {
+    return HelperUtil.formatDate(date);
+  }
 }

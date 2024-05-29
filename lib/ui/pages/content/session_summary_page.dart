@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
+import 'package:loggy/loggy.dart';
 import 'dart:math';
 
 import 'package:sum_plus/ui/pages/content/quest_page.dart';
@@ -28,13 +29,15 @@ class _SessionSummaryPageState extends State<SessionSummaryPage>
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        _questionController.endSession();
-        return true;
+    return PopScope(
+      onPopInvoked: (willPop) {
+        logInfo('onPopInvoked: $willPop');
+        if (willPop) {
+          _questionController.endSession();
+        }
       },
       child: Scaffold(
-        backgroundColor: Color(0xF2F2F2).withOpacity(1),
+        backgroundColor: const Color(0xF2F2F2).withOpacity(1),
         appBar: AppBarWidget(
           text: 'Results',
           logoutButton: false,
@@ -128,7 +131,7 @@ class _SessionSummaryPageState extends State<SessionSummaryPage>
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey.shade400,
+                          backgroundColor: Colors.grey.shade200,
                           foregroundColor: Colors.black87),
                       onPressed: () {
                         _questionController.endSession();

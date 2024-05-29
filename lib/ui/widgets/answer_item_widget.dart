@@ -7,7 +7,7 @@ class AnswerItemWidget extends StatelessWidget {
   Answer answer;
   int numAnswer;
 
-  Widget AnswerMainInfoWidget() {
+  Widget answerMainInfoWidget() {
     List<Widget> children = [
       Text(
         'Question: ${answer.question.toString()}',
@@ -63,7 +63,7 @@ class AnswerItemWidget extends StatelessWidget {
               ),
               Container(
                   padding: const EdgeInsets.fromLTRB(12, 16, 0, 16),
-                  child: AnswerMainInfoWidget())
+                  child: answerMainInfoWidget())
             ],
           ),
           Container(
