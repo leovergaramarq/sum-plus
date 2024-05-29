@@ -1,4 +1,4 @@
-# uninorte_mobile_class_project
+# sum_plus
 
 A new Flutter project.
 

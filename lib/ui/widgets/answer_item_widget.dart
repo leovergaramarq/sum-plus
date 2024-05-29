@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uninorte_mobile_class_project/domain/models/answer.dart';
+import 'package:sum_plus/domain/models/answer.dart';
 
 class AnswerItemWidget extends StatelessWidget {
   AnswerItemWidget({required this.answer, required this.numAnswer});

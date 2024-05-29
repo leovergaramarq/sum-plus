@@ -1,8 +1,8 @@
 // import 'package:get/get.dart';
 
-// import 'package:uninorte_mobile_class_project/domain/repositories/session_repository.dart';
-import 'package:uninorte_mobile_class_project/data/repositories/session_retool_repository.dart';
-import 'package:uninorte_mobile_class_project/domain/models/session.dart';
+// import 'package:sum_plus/domain/repositories/session_repository.dart';
+import 'package:sum_plus/data/repositories/session_retool_repository.dart';
+import 'package:sum_plus/domain/models/session.dart';
 
 class SessionUseCase {
   // final SessionRetoolRepository _sessionRepository =

@@ -1,4 +1,4 @@
-import 'package:uninorte_mobile_class_project/domain/models/user.dart';
+import 'package:sum_plus/domain/models/user.dart';
 
 abstract class UserRepository {
   Future<User> getUser(String? email);

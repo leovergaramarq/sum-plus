@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:uninorte_mobile_class_project/ui/pages/auth/first_page.dart';
+import 'package:sum_plus/ui/pages/auth/first_page.dart';
 
 MaterialColor myPrimarySwatch = MaterialColor(0xFF997AC1, {
   50: Color(0xFFF5EEF7),

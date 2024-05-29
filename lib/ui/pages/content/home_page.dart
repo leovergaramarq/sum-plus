@@ -3,19 +3,19 @@ import 'package:get/get.dart';
 import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// import 'package:uninorte_mobile_class_project/ui/pages/auth/login_page.dart';
-import 'package:uninorte_mobile_class_project/ui/pages/content/quest_page.dart';
-import 'package:uninorte_mobile_class_project/ui/widgets/app_bar_widget.dart';
-import 'package:uninorte_mobile_class_project/ui/widgets/bottom_nav_bar_widget.dart';
-import 'package:uninorte_mobile_class_project/ui/widgets/level_stars_widget.dart';
-import 'package:uninorte_mobile_class_project/ui/utils/auth_util.dart';
+// import 'package:sum_plus/ui/pages/auth/login_page.dart';
+import 'package:sum_plus/ui/pages/content/quest_page.dart';
+import 'package:sum_plus/ui/widgets/app_bar_widget.dart';
+import 'package:sum_plus/ui/widgets/bottom_nav_bar_widget.dart';
+import 'package:sum_plus/ui/widgets/level_stars_widget.dart';
+import 'package:sum_plus/ui/utils/auth_util.dart';
 
-import 'package:uninorte_mobile_class_project/ui/controller/auth_controller.dart';
-import 'package:uninorte_mobile_class_project/ui/controller/question_controller.dart';
-import 'package:uninorte_mobile_class_project/ui/controller/user_controller.dart';
-import 'package:uninorte_mobile_class_project/ui/controller/session_controller.dart';
+import 'package:sum_plus/ui/controller/auth_controller.dart';
+import 'package:sum_plus/ui/controller/question_controller.dart';
+import 'package:sum_plus/ui/controller/user_controller.dart';
+import 'package:sum_plus/ui/controller/session_controller.dart';
 
-import 'package:uninorte_mobile_class_project/domain/models/answer.dart';
+import 'package:sum_plus/domain/models/answer.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key, this.fetchSessions = true}) : super(key: key);

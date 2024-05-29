@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 
-import 'package:uninorte_mobile_class_project/domain/use_case/auth_use_case.dart';
+import 'package:sum_plus/domain/use_case/auth_use_case.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {

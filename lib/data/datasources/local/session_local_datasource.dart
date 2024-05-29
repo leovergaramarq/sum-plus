@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:uninorte_mobile_class_project/domain/models/session.dart';
+import 'package:sum_plus/domain/models/session.dart';
 
 class SessionLocalDatasource {
   // SessionLocalDatasource() {

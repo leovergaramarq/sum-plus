@@ -1,10 +1,10 @@
 // import 'dart:async';
-import 'package:uninorte_mobile_class_project/data/datasources/remote/session_datasource.dart';
-import 'package:uninorte_mobile_class_project/data/datasources/local/session_local_datasource.dart';
-import 'package:uninorte_mobile_class_project/data/utils/network_util.dart';
+import 'package:sum_plus/data/datasources/remote/session_datasource.dart';
+import 'package:sum_plus/data/datasources/local/session_local_datasource.dart';
+import 'package:sum_plus/data/utils/network_util.dart';
 
-import 'package:uninorte_mobile_class_project/domain/models/session.dart';
-import 'package:uninorte_mobile_class_project/domain/repositories/session_repository.dart';
+import 'package:sum_plus/domain/models/session.dart';
+import 'package:sum_plus/domain/repositories/session_repository.dart';
 
 class SessionRetoolRepository implements SessionRepository {
   final SessionDatasource _sessionDatasource = SessionDatasource();
@@ -18,7 +18,7 @@ class SessionRetoolRepository implements SessionRepository {
       {int? limit, String? sort, String? order}) async {
     bool lastNetworkCheck = NetworkUtil.lastNetworkCheck;
 
-    if (await NetworkUtil.hasNetwork(baseUri) && userEmail != null) {
+    if (await NetworkUtil.hasNetwork() && userEmail != null) {
       if (!lastNetworkCheck) await checkMissingLocalSessions();
       List<Session> sessions = await _sessionDatasource.getSessionsFromUser(
         baseUri,
@@ -38,7 +38,7 @@ class SessionRetoolRepository implements SessionRepository {
   Future<Session> addSession(Session session) async {
     bool lastNetworkCheck = NetworkUtil.lastNetworkCheck;
 
-    if (await NetworkUtil.hasNetwork(baseUri)) {
+    if (await NetworkUtil.hasNetwork()) {
       if (!lastNetworkCheck) await checkMissingLocalSessions();
       final Session newSession =
           await _sessionDatasource.addSession(baseUri, session);

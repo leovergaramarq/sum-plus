@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:uninorte_mobile_class_project/domain/models/question.dart';
+import 'package:sum_plus/domain/models/question.dart';
 
 class QuestionWidget extends StatelessWidget {
   QuestionWidget({Key? key, required this.question});

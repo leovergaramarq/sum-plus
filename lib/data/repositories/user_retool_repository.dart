@@ -1,9 +1,9 @@
-import 'package:uninorte_mobile_class_project/data/datasources/remote/user_datasource.dart';
-import 'package:uninorte_mobile_class_project/data/datasources/local/user_local_datasource.dart';
-import 'package:uninorte_mobile_class_project/data/utils/network_util.dart';
+import 'package:sum_plus/data/datasources/remote/user_datasource.dart';
+import 'package:sum_plus/data/datasources/local/user_local_datasource.dart';
+import 'package:sum_plus/data/utils/network_util.dart';
 
-import 'package:uninorte_mobile_class_project/domain/models/user.dart';
-import 'package:uninorte_mobile_class_project/domain/repositories/user_repository.dart';
+import 'package:sum_plus/domain/models/user.dart';
+import 'package:sum_plus/domain/repositories/user_repository.dart';
 
 class UserRetoolRepository implements UserRepository {
   final UserDatasource _userDatasource = UserDatasource();
@@ -34,7 +34,7 @@ class UserRetoolRepository implements UserRepository {
 
   @override
   Future<User> updateUser(User user) async {
-    if (await NetworkUtil.hasNetwork(baseUri)) {
+    if (await NetworkUtil.hasNetwork()) {
       final User updatedUser = await _userDatasource.updateUser(baseUri, user);
       _userLocalDatasource.updateUser(updatedUser).catchError((e) => print(e));
       return updatedUser;
@@ -52,7 +52,7 @@ class UserRetoolRepository implements UserRepository {
       String? degree,
       String? school,
       int? level}) async {
-    if (await NetworkUtil.hasNetwork(baseUri)) {
+    if (await NetworkUtil.hasNetwork()) {
       final User updatedUser = await _userDatasource.updatePartialUser(
           baseUri, id,
           firstName: firstName,

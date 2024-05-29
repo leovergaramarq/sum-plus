@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:uninorte_mobile_class_project/ui/controller/auth_controller.dart';
+import 'package:sum_plus/ui/controller/auth_controller.dart';
 
 class AuthUtil {
   final AuthController _authController = Get.find<AuthController>();

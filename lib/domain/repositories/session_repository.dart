@@ -1,5 +1,5 @@
-// import 'package:uninorte_mobile_class_project/data/datasources/remote/session_datasource.dart';
-import 'package:uninorte_mobile_class_project/domain/models/session.dart';
+// import 'package:sum_plus/data/datasources/remote/session_datasource.dart';
+import 'package:sum_plus/domain/models/session.dart';
 
 abstract class SessionRepository {
   Future<List<Session>> getSessionsFromUser(String? userEmail,

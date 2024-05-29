@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-import 'package:uninorte_mobile_class_project/ui/pages/content/home_page.dart';
-import 'package:uninorte_mobile_class_project/ui/pages/content/profile_page.dart';
-import 'package:uninorte_mobile_class_project/ui/pages/content/history_page.dart';
+import 'package:sum_plus/ui/pages/content/home_page.dart';
+import 'package:sum_plus/ui/pages/content/profile_page.dart';
+import 'package:sum_plus/ui/pages/content/history_page.dart';
 
 class BottomNavBarWidget extends StatelessWidget {
   BottomNavBarWidget({Key? key, required this.section}) : super(key: key);

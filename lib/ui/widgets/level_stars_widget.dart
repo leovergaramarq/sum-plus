@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:get/get.dart';
 
-import 'package:uninorte_mobile_class_project/ui/controller/question_controller.dart';
+import 'package:sum_plus/ui/controller/question_controller.dart';
 
 class LevelStarsWidget extends StatelessWidget {
   LevelStarsWidget(

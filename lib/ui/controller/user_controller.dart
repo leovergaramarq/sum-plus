@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 
-import 'package:uninorte_mobile_class_project/domain/use_case/user_use_case.dart';
-import 'package:uninorte_mobile_class_project/domain/models/user.dart';
+import 'package:sum_plus/domain/use_case/user_use_case.dart';
+import 'package:sum_plus/domain/models/user.dart';
 
 class UserController extends GetxController {
   final UserUseCase _userUseCase = UserUseCase();

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:uninorte_mobile_class_project/ui/widgets/app_bar_widget.dart';
-import 'package:uninorte_mobile_class_project/ui/widgets/bottom_nav_bar_widget.dart';
-import 'package:uninorte_mobile_class_project/ui/controller/user_controller.dart';
+import 'package:sum_plus/ui/widgets/app_bar_widget.dart';
+import 'package:sum_plus/ui/widgets/bottom_nav_bar_widget.dart';
+import 'package:sum_plus/ui/controller/user_controller.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({Key? key}) : super(key: key);

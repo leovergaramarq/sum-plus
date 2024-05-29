@@ -1,8 +1,8 @@
 // import 'package:get/get.dart';
 
-// import 'package:uninorte_mobile_class_project/domain/repositories/user_repository.dart';
-import 'package:uninorte_mobile_class_project/data/repositories/user_retool_repository.dart';
-import 'package:uninorte_mobile_class_project/domain/models/user.dart';
+// import 'package:sum_plus/domain/repositories/user_repository.dart';
+import 'package:sum_plus/data/repositories/user_retool_repository.dart';
+import 'package:sum_plus/domain/models/user.dart';
 
 class UserUseCase {
   // final UserRetoolRepository _userRepository = Get.find<UserRetoolRepository>();

@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "uninorte_mobile_class_project" "\0"
+            VALUE "FileDescription", "sum_plus" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "uninorte_mobile_class_project" "\0"
+            VALUE "InternalName", "sum_plus" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "uninorte_mobile_class_project.exe" "\0"
-            VALUE "ProductName", "uninorte_mobile_class_project" "\0"
+            VALUE "OriginalFilename", "sum_plus.exe" "\0"
+            VALUE "ProductName", "sum_plus" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

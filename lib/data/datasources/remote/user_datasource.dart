@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:loggy/loggy.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:uninorte_mobile_class_project/domain/models/user.dart';
+import 'package:sum_plus/domain/models/user.dart';
 
 class UserDatasource {
   Future<User> getUser(String baseUri, String email) async {

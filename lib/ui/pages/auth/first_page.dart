@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:uninorte_mobile_class_project/ui/pages/auth/login_page.dart';
-import 'package:uninorte_mobile_class_project/ui/pages/content/home_page.dart';
+import 'package:sum_plus/ui/pages/auth/login_page.dart';
+import 'package:sum_plus/ui/pages/content/home_page.dart';
 
-import 'package:uninorte_mobile_class_project/ui/controller/auth_controller.dart';
-import 'package:uninorte_mobile_class_project/ui/controller/user_controller.dart';
-import 'package:uninorte_mobile_class_project/ui/controller/session_controller.dart';
-import 'package:uninorte_mobile_class_project/ui/controller/question_controller.dart';
+import 'package:sum_plus/ui/controller/auth_controller.dart';
+import 'package:sum_plus/ui/controller/user_controller.dart';
+import 'package:sum_plus/ui/controller/session_controller.dart';
+import 'package:sum_plus/ui/controller/question_controller.dart';
 
 class FirstPage extends StatefulWidget {
   const FirstPage({Key? key}) : super(key: key);

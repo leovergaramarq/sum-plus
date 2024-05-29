@@ -1,7 +1,7 @@
-import 'package:uninorte_mobile_class_project/domain/repositories/auth_repository.dart';
+import 'package:sum_plus/domain/repositories/auth_repository.dart';
 
-import 'package:uninorte_mobile_class_project/data/datasources/remote/auth_datasource.dart';
-import 'package:uninorte_mobile_class_project/data/datasources/local/auth_local_datasource.dart';
+import 'package:sum_plus/data/datasources/remote/auth_datasource.dart';
+import 'package:sum_plus/data/datasources/local/auth_local_datasource.dart';
 
 class AuthAuthserverRepository implements AuthRepository {
   // AuthAuthserverRepository() {

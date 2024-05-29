@@ -4,20 +4,20 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:uninorte_mobile_class_project/ui/pages/content/session_summary_page.dart';
+import 'package:sum_plus/ui/pages/content/session_summary_page.dart';
 
-import 'package:uninorte_mobile_class_project/ui/widgets/answer_typing_widget.dart';
-import 'package:uninorte_mobile_class_project/ui/widgets/app_bar_widget.dart';
-import 'package:uninorte_mobile_class_project/ui/widgets/question_widget.dart';
-import 'package:uninorte_mobile_class_project/ui/widgets/numpad_widget.dart';
-import 'package:uninorte_mobile_class_project/ui/widgets/level_stars_widget.dart';
+import 'package:sum_plus/ui/widgets/answer_typing_widget.dart';
+import 'package:sum_plus/ui/widgets/app_bar_widget.dart';
+import 'package:sum_plus/ui/widgets/question_widget.dart';
+import 'package:sum_plus/ui/widgets/numpad_widget.dart';
+import 'package:sum_plus/ui/widgets/level_stars_widget.dart';
 
-import 'package:uninorte_mobile_class_project/ui/controller/question_controller.dart';
-import 'package:uninorte_mobile_class_project/ui/controller/user_controller.dart';
-import 'package:uninorte_mobile_class_project/ui/controller/auth_controller.dart';
-import 'package:uninorte_mobile_class_project/ui/controller/session_controller.dart';
+import 'package:sum_plus/ui/controller/question_controller.dart';
+import 'package:sum_plus/ui/controller/user_controller.dart';
+import 'package:sum_plus/ui/controller/auth_controller.dart';
+import 'package:sum_plus/ui/controller/session_controller.dart';
 
-import 'package:uninorte_mobile_class_project/domain/models/answer.dart';
+import 'package:sum_plus/domain/models/answer.dart';
 
 class QuestPage extends StatefulWidget {
   const QuestPage({Key? key}) : super(key: key);

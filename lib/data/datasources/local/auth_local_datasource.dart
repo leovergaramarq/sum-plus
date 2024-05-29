@@ -15,12 +15,12 @@ class AuthLocalDatasource {
     return await prefs!.setString(tokenKey, token);
   }
 
-  Future<String?> getToken() async {
-    if (prefs == null) {
-      prefs = await SharedPreferences.getInstance();
-    }
-    return prefs!.getString(tokenKey);
-  }
+  // Future<String?> getToken() async {
+  //   if (prefs == null) {
+  //     prefs = await SharedPreferences.getInstance();
+  //   }
+  //   return prefs!.getString(tokenKey);
+  // }
 
   Future<bool> removeToken() async {
     if (prefs == null) {

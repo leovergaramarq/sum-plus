@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 
-import 'package:uninorte_mobile_class_project/domain/use_case/session_use_case.dart';
-import 'package:uninorte_mobile_class_project/domain/models/session.dart';
+import 'package:sum_plus/domain/use_case/session_use_case.dart';
+import 'package:sum_plus/domain/models/session.dart';
 
 class SessionController extends GetxController {
   final SessionUseCase _sessionUseCase = SessionUseCase();

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:loggy/loggy.dart';
-import 'package:uninorte_mobile_class_project/domain/models/session.dart';
+import 'package:sum_plus/domain/models/session.dart';
 import 'package:http/http.dart' as http;
 
 class SessionDatasource {

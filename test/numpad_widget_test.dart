@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:uninorte_mobile_class_project/ui/widgets/numpad_widget.dart';
+import 'package:sum_plus/ui/widgets/numpad_widget.dart';
 
 void main() {
   testWidgets('NumpadWidget should handle button clicks',

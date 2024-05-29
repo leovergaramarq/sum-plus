@@ -8,21 +8,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:uninorte_mobile_class_project/ui/controller/auth_controller.dart';
-import 'package:uninorte_mobile_class_project/ui/controller/question_controller.dart';
-import 'package:uninorte_mobile_class_project/ui/controller/session_controller.dart';
-import 'package:uninorte_mobile_class_project/ui/controller/user_controller.dart';
-import 'package:uninorte_mobile_class_project/ui/pages/auth/login_page.dart';
-import 'package:uninorte_mobile_class_project/ui/pages/auth/signup_page.dart';
-import 'package:uninorte_mobile_class_project/ui/pages/auth/first_page.dart';
-import 'package:uninorte_mobile_class_project/main.dart';
-import 'package:uninorte_mobile_class_project/ui/pages/content/home_page.dart';
-import 'package:uninorte_mobile_class_project/ui/pages/content/profile_page.dart';
-import 'package:uninorte_mobile_class_project/ui/pages/content/history_page.dart';
-import 'package:uninorte_mobile_class_project/ui/pages/content/profile_page.dart';
-import 'package:uninorte_mobile_class_project/ui/pages/content/quest_page.dart';
-import 'package:uninorte_mobile_class_project/ui/widgets/app_bar_widget.dart';
-import 'package:uninorte_mobile_class_project/ui/widgets/bottom_nav_bar_widget.dart';
+import 'package:sum_plus/ui/controller/auth_controller.dart';
+import 'package:sum_plus/ui/controller/question_controller.dart';
+import 'package:sum_plus/ui/controller/session_controller.dart';
+import 'package:sum_plus/ui/controller/user_controller.dart';
+import 'package:sum_plus/ui/pages/auth/login_page.dart';
+import 'package:sum_plus/ui/pages/auth/signup_page.dart';
+import 'package:sum_plus/ui/pages/auth/first_page.dart';
+import 'package:sum_plus/main.dart';
+import 'package:sum_plus/ui/pages/content/home_page.dart';
+import 'package:sum_plus/ui/pages/content/profile_page.dart';
+import 'package:sum_plus/ui/pages/content/history_page.dart';
+import 'package:sum_plus/ui/pages/content/profile_page.dart';
+import 'package:sum_plus/ui/pages/content/quest_page.dart';
+import 'package:sum_plus/ui/widgets/app_bar_widget.dart';
+import 'package:sum_plus/ui/widgets/bottom_nav_bar_widget.dart';
 
 void main() {
   //Test de la primera pagina

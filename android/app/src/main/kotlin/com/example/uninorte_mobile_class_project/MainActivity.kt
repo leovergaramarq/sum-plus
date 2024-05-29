@@ -1,4 +1,4 @@
-package com.example.uninorte_mobile_class_project
+package com.example.sum_plus
 
 import io.flutter.embedding.android.FlutterActivity
 

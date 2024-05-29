@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:uninorte_mobile_class_project/domain/models/user.dart';
+import 'package:sum_plus/domain/models/user.dart';
 
 class UserLocalDatasource {
   UserLocalDatasource() {

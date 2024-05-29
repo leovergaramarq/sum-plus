@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 
-import 'package:uninorte_mobile_class_project/domain/use_case/question_use_case.dart';
+import 'package:sum_plus/domain/use_case/question_use_case.dart';
 
-import 'package:uninorte_mobile_class_project/domain/models/question.dart';
-import 'package:uninorte_mobile_class_project/domain/models/session.dart';
-import 'package:uninorte_mobile_class_project/domain/models/answer.dart';
+import 'package:sum_plus/domain/models/question.dart';
+import 'package:sum_plus/domain/models/session.dart';
+import 'package:sum_plus/domain/models/answer.dart';
 
 class QuestionController extends GetxController {
   // states

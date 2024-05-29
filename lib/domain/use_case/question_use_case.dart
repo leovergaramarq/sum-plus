@@ -1,11 +1,11 @@
 import 'dart:math';
 // import 'package:get/get.dart';
 
-import 'package:uninorte_mobile_class_project/domain/models/question.dart';
-// import 'package:uninorte_mobile_class_project/domain/repositories/question_repository.dart';
+import 'package:sum_plus/domain/models/question.dart';
+// import 'package:sum_plus/domain/repositories/question_repository.dart';
 
-import 'package:uninorte_mobile_class_project/domain/models/session.dart';
-import 'package:uninorte_mobile_class_project/domain/models/answer.dart';
+import 'package:sum_plus/domain/models/session.dart';
+import 'package:sum_plus/domain/models/answer.dart';
 
 class QuestionUseCase {
   // static fields

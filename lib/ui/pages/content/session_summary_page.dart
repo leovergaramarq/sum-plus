@@ -3,16 +3,16 @@ import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'dart:math';
 
-import 'package:uninorte_mobile_class_project/ui/pages/content/quest_page.dart';
-import 'package:uninorte_mobile_class_project/ui/widgets/app_bar_widget.dart';
-import 'package:uninorte_mobile_class_project/ui/widgets/answer_item_widget.dart';
+import 'package:sum_plus/ui/pages/content/quest_page.dart';
+import 'package:sum_plus/ui/widgets/app_bar_widget.dart';
+import 'package:sum_plus/ui/widgets/answer_item_widget.dart';
 
-import 'package:uninorte_mobile_class_project/ui/widgets/level_stars_widget.dart';
+import 'package:sum_plus/ui/widgets/level_stars_widget.dart';
 
-import 'package:uninorte_mobile_class_project/ui/controller/auth_controller.dart';
-import 'package:uninorte_mobile_class_project/ui/controller/question_controller.dart';
+import 'package:sum_plus/ui/controller/auth_controller.dart';
+import 'package:sum_plus/ui/controller/question_controller.dart';
 
-import 'package:uninorte_mobile_class_project/domain/models/answer.dart';
+import 'package:sum_plus/domain/models/answer.dart';
 
 class SessionSummaryPage extends StatefulWidget {
   const SessionSummaryPage({Key? key}) : super(key: key);
