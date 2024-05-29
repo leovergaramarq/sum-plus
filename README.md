@@ -19,7 +19,7 @@ Mobile application that seeks to promote the practice and learning of basic math
 
 ### Releases (Android)
 
-In the [Releases](https://github.com/leovergaramarq/sum-plus/) section, you will find APK file for download and installation. Since this installation is through an APK, Android will prompt an alert when attempting to install it. In that case, just proceed to install it.
+In the [Releases](https://github.com/leovergaramarq/sum-plus/releases) section, you will find APK file for download and installation. Since this installation is through an APK, Android will prompt an alert when attempting to install it. In that case, just proceed to install it.
 
 ### Running Source code and Mount Backend
 
